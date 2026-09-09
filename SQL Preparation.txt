@@ -1,0 +1,2152 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+🎯 MNC Technical HR Rapid Fire
+Q1. What is Data?
+Answer: Raw facts or information.
+
+Q2. What is a Database?
+Answer: An organized collection of related data stored electronically.
+
+Q3. What is DBMS?
+Answer: Software used to create, manage, retrieve, update, and delete data in a database.
+
+Q4. What is RDBMS?
+Answer: A DBMS that stores data in related tables and maintains relationships using keys.
+
+Q5. What is SQL?
+Answer: A language used to communicate with relational databases by creating, reading, updating, and deleting data.
+
+Q1. Can a table exist without rows?
+✅ Yes. A newly created table can have zero rows but still contain columns.
+
+Q2. Can a table exist without columns?
+❌ No. A table must have at least one column because columns define the structure of the data.
+
+Q3. Is a row unique?
+Not always. Unless a Primary Key or Unique Constraint is used, duplicate rows can exist.
+
+Q4. What is the difference between a row and a record?
+In SQL, they are generally the same. A record refers to the complete information about one entity, and it is stored as a row in the table.
+
+Q1. Can a table have two Primary Keys?
+Answer:
+No. A table can have only one Primary Key, although that Primary Key may consist of multiple columns (a composite primary key).
+
+Q2. Can a table have multiple Foreign Keys?
+Answer:
+Yes. A table can have multiple Foreign Keys referencing different tables or even the same table.
+
+Q3. Difference between Primary Key and Unique Key?
+Answer:
+Primary Key cannot contain NULL values and uniquely identifies each row.
+Unique Key also prevents duplicate values, but in MySQL it generally allows one NULL value.
+
+Q4. Why is a Foreign Key used?
+Answer:
+To create relationships between tables and maintain referential integrity, ensuring that related data remains consistent.
+
+Q5. Difference between Candidate Key and Super Key?
+Answer:
+A Super Key is any combination of columns that uniquely identifies a row.
+A Candidate Key is the smallest possible Super Key with no unnecessary columns.
+
+🎯 MNC Technical HR Questions
+Q1. What is a Constraint?
+Answer:
+A constraint is a rule applied to a column to ensure data accuracy and integrity.
+
+Q2. Why do we use NOT NULL?
+Answer:
+To ensure that mandatory fields always contain a value.
+
+Q3. Why use CHECK?
+Answer:
+To restrict invalid data, such as ensuring age is at least 18 or salary is greater than zero.
+
+Q4. Difference between CHAR and VARCHAR?
+Answer:
+CHAR stores fixed-length strings and pads unused spaces.
+VARCHAR stores variable-length strings and uses storage efficiently.
+
+Q5. Why use DECIMAL instead of FLOAT for salary?
+Answer:
+Because DECIMAL stores exact values without floating-point rounding errors, making it suitable for financial data.
+
+Q1. Difference between DELETE and TRUNCATE?
+Answer:
+DELETE removes selected rows (or all rows if no WHERE clause is used) and supports the WHERE clause.
+TRUNCATE removes all rows quickly, does not support WHERE, and keeps the table structure.
+
+Q2. Difference between DROP and TRUNCATE?
+Answer:
+TRUNCATE removes only the data and keeps the table.
+DROP removes both the table structure and all its data permanently.
+
+Q3. Difference between CREATE and ALTER?
+Answer:
+CREATE creates a new database object.
+ALTER modifies the structure of an existing database object.
+
+Q4. Why is WHERE important in UPDATE and DELETE?
+Answer:
+Without a WHERE clause, UPDATE or DELETE affects every row in the table, which can lead to accidental data loss or incorrect updates.
+
+Q5. Which SQL command is used most frequently in real projects?
+Answer:
+SELECT is the most frequently used command because applications constantly retrieve data to display users, products, orders, reports, and other information.
+
+Q1 - Why do we use WHERE?
+Answer - WHERE filters rows based on a condition so that only the required data is returned.
+
+Q2 - Does WHERE execute before SELECT?
+Answer - Yes. SQL logically processes FROM, then WHERE, and finally SELECT.
+
+Q3 - Can WHERE be used without SELECT?
+Answer - Yes. It is commonly used with UPDATE and DELETE as well.
+	Ex: UPDATE Employee
+	SET salary = 60000
+	WHERE emp_id = 101;
+	DELETE FROM Employee
+	WHERE department = 'HR';
+
+Q4 - Can WHERE filter calculated values?
+Answer - No. WHERE filters rows before grouping or aggregate calculations. For aggregated results, use HAVING.
+
+Q5 - Does WHERE improve performance?
+Answer - Yes. It reduces the number of rows processed. When combined with appropriate indexes, it can significantly improve query performance.
+
+Q1 - Difference between AND and OR?
+Answer - AND requires all conditions to be TRUE.
+OR requires at least one condition to be TRUE.
+Q2 - When do we use NOT?
+Answer - NOT is used to exclude records that match a particular condition.
+
+Q3 - Which operator has higher priority?
+Answer - NOT has the highest priority, followed by AND, then OR.
+
+Q4 - Can we use multiple AND conditions?
+Answer - Yes. SQL allows multiple conditions joined by AND.
+Example:
+WHERE department='Python'
+AND city='Pune'
+AND salary>60000;
+
+Q5 - Why should we use parentheses with AND and OR?
+Answer - Parentheses make the intended logic explicit and avoid mistakes caused by SQL's operator precedence.
+
+Q1 - Difference between IN and BETWEEN?
+Answer - IN checks membership in a list.
+	BETWEEN checks whether a value falls within a continuous range.
+
+Q2 - Difference between LIKE and = ?
+Answer - = checks for an exact match.
+	LIKE checks for pattern matches using wildcards.
+
+Q3 - Difference between % and _ ?
+Answer - %  : matches zero or more characters.
+	 _  : matches exactly one character.
+
+Q4 - Can BETWEEN work on DATE?
+Answer - Yes. BETWEEN works with numbers, dates, and other comparable values.
+
+Q5 - Can NOT be used with LIKE?
+Answer - Yes.
+Example
+	SELECT *
+	FROM Employee
+	WHERE name
+	NOT LIKE 'S%';
+	Returns names that do not start with S.
+
+Q1 - Difference between ORDER BY and GROUP BY?
+     ORDER BY sorts rows.
+     GROUP BY groups rows before aggregation.
+
+Q2 - Can ORDER BY work without LIMIT?
+     Yes.
+
+Q3 - Can LIMIT work without ORDER BY?
+     Yes, but the returned rows may not be in a meaningful order because SQL tables do not guarantee row order unless you specify ORDER BY.
+
+Q4 - Can DISTINCT remove duplicate rows?
+     Yes, if every selected column has identical values.
+
+Q5 - Which executes first?
+    SELECT DISTINCT city FROM Employee ORDER BY city;
+
+Q1 - Difference between WHERE and HAVING?
+Answer - WHERE filters individual rows before grouping, while HAVING filters grouped data after aggregation.
+
+Q2 - Can HAVING work without GROUP BY?
+Answer - Yes. If the query produces a single aggregated result, HAVING can filter that result.
+Example: SELECT COUNT(*) FROM Employee HAVING COUNT(*) > 5;
+
+Q3 - Can aggregate functions be used in WHERE?
+Answer - No.
+Incorrect: WHERE AVG(salary)>50000
+Correct: HAVING AVG(salary)>50000
+
+Q4 - Difference between COUNT(*) and COUNT(column)? 
+Answer - COUNT(*) counts every row.
+         COUNT(column) counts only rows where that column is not NULL.
+
+Q5 - What is the difference between MAX() and ORDER BY DESC LIMIT 1?
+Answer - MAX(salary) returns only the highest salary value.
+         ORDER BY salary DESC LIMIT 1 returns the complete row (name, department, salary, etc.) of the highest-paid employee.
+
+Q1 - Difference between NULL and 0?
+Answer - NULL means no value exists.
+         0 is an actual numeric value.
+
+Q2 - Can NULL equal NULL?
+Answer - No. SQL treats comparisons involving NULL as UNKNOWN, so use IS NULL instead of =.
+
+Q3 - Difference between COALESCE and CASE?
+Answer - COALESCE replaces NULL by returning the first non-NULL value.
+         CASE performs general conditional logic based on expressions.
+
+Q4 - Can CASE be used in SELECT?
+     Yes. Can CASE be used in ORDER BY?
+     Yes. Can CASE be used in GROUP BY?
+     Yes, when appropriate.
+
+Q5 - Why is COALESCE better than displaying NULL?
+     Because user-facing reports become more meaningful and easier to understand.
+     Example: Instead of NULL Display No Manager Assigned
+
+Q1 Why do we need JOIN?
+A JOIN is used to retrieve related information stored in multiple normalized tables. It avoids data duplication and allows us to combine records using related keys.
+
+Q2 Which key is commonly used in JOIN?
+Primary Key and Foreign Key
+
+Q3 Can we JOIN three tables? ->Yes.
+   Four? -> Yes.
+   Ten? -> Yes.
+Companies join many tables in reporting and analytics queries.
+
+Q4 Does JOIN permanently merge tables?
+No. JOIN only combines data in the query result.
+
+Q1 What is INNER JOIN?
+Answer:INNER JOIN returns only the records that have matching values in both tables based on the join condition.
+
+Q2 What happens if no match exists?
+Answer: The row is excluded from the result set.
+
+Q3 Can INNER JOIN produce duplicate rows?
+Answer: Yes. If multiple matching rows exist in the second table, the joined result will contain multiple rows.
+
+Q4 Which executes first: WHERE or JOIN?
+Logical execution:
+FROM + JOIN
+↓
+WHERE
+↓
+GROUP BY
+↓
+HAVING
+↓
+SELECT
+↓
+ORDER BY
+↓
+LIMIT
+
+Q5 Why are joins preferred over storing everything in one table?
+Answer: Joins support normalization, reduce data duplication, improve consistency, and make updates easier.
+
+Q1 What is LEFT JOIN?
+Answer - LEFT JOIN returns all rows from the left table and matching rows from the right table. If no matching record exists,
+         SQL fills the right-side columns with NULL.
+
+Q2 When do you use LEFT JOIN?
+Answer - When I need every record from the primary table, even if related data is missing.
+
+Q3 - Can LEFT JOIN return NULL?
+     Yes. - When no matching row exists in the right table.
+
+Q4 - Can LEFT JOIN produce duplicate rows?
+     Yes.- If one left-side row matches multiple right-side rows, multiple result rows are returned.
+
+Q5 - Can LEFT JOIN be faster than INNER JOIN?
+     Sometimes, but performance mainly depends on indexes, table sizes, and query execution plans rather than the join type alone.
+
+Q1 - What is RIGHT JOIN?
+Answer - RIGHT JOIN returns all rows from the right table and matching rows from the left table. If no matching row exists, the left-side columns become NULL.
+
+Q2 - Why is RIGHT JOIN rarely used?
+Answer - Because developers can achieve the same result by swapping the table order and using a LEFT JOIN, which is more commonly used and easier to read.
+
+Q3 - Can RIGHT JOIN return NULL?
+     Yes. - When no matching row exists in the left table.
+
+Q4 - Can RIGHT JOIN be replaced?
+     Yes. Swap table order. Use LEFT JOIN.
+
+Q5 - Which JOIN do companies use more?
+     LEFT JOIN.
+
+Q1 - What is FULL OUTER JOIN?
+FULL OUTER JOIN returns all matching and non-matching rows from both tables. Missing values are represented as NULL.
+
+Q2 - When should we use FULL JOIN?
+Answer - When we want complete data from both tables, including unmatched records.
+
+Q3 - Does MySQL support FULL JOIN?
+Answer - No. It is simulated using LEFT JOIN + UNION + RIGHT JOIN.
+
+Q4 - Can FULL JOIN produce NULL values?
+     Yes. - On both sides.
+
+Q5 - Which databases support FULL JOIN?
+     PostgreSQL, SQL Server, Oracle
+
+Q1 - What is SELF JOIN?
+A SELF JOIN joins a table with itself using aliases. It is useful when rows in the same table are related, such as employee-manager relationships.
+
+Q2 - Why are aliases mandatory?
+Answer - Without aliases,
+         SQL cannot distinguish between the two logical roles of the same table.
+
+Q3 - Can SELF JOIN use LEFT JOIN?
+     Yes.
+     Example: Display All employees including those without managers.
+              SELECT e.Name, m.Name AS Manager FROM Employee e LEFT JOIN Employee m ON e.Manager_ID = m.Emp_ID;
+
+Q4 - Can SELF JOIN use INNER JOIN?
+     Yes. - Only employees who have managers will appear.
+
+Q5 - Where is SELF JOIN used in real projects?
+Employee hierarchy
+Category hierarchy
+Folder structure
+Family tree
+Referral systems
+Organizational charts
+
+Q1 - What is CROSS JOIN?
+Answer - A CROSS JOIN returns the Cartesian Product of two tables by combining every row from the first table with every row from the second table.
+
+Q2 - Does CROSS JOIN require an ON condition?
+Answer - No.
+         Unlike INNER, LEFT, and RIGHT JOIN, a CROSS JOIN does not use an ON clause.
+
+Q3 - How many rows will be returned?
+     Table A = 100 rows 
+     Table B = 50 rows
+     Answer - 100 × 50 = 5000 Rows
+
+Q4 - When is CROSS JOIN used?
+Answer - When every possible combination between two datasets is required, such as product variants, schedules, testing combinations, or matrix generation.
+
+Q5 - Can CROSS JOIN become slow?
+     Yes. - Because the number of rows grows multiplicatively.
+
+Q1 - What is a Subquery?
+Answer - A Subquery is an SQL query written inside another SQL query. The inner query executes first and its result is used by the outer query.
+
+Q2 - Which query executes first?
+Answer - The inner query executes first.
+
+Q3 - Can a Subquery return multiple rows?
+     Yes. - Different types of Subqueries return one row, multiple rows, or multiple columns.
+
+Q4 - Can a Subquery be used in SELECT?
+     Yes.
+     Example - SELECT Name,(SELECT AVG(Salary) FROM Employee ) AS Average_Salary FROM Employee;
+
+Q5 - Where can Subqueries be used?
+They can appear in:
+SELECT
+WHERE
+FROM
+HAVING
+INSERT
+UPDATE
+DELETE
+
+Q1 - What is a Scalar Subquery?
+Answer - A Scalar Subquery is a subquery that returns exactly one row and one column, producing a single value that can be used anywhere a single value is expected.
+
+Q2 - How many values can a Scalar Subquery return?
+     Exactly one value.
+
+Q3 - Can it return NULL?
+     Yes.- If no rows satisfy the condition, many aggregate functions (except COUNT) can return NULL.
+
+Q4 - Can it return multiple rows?
+     No. - If a scalar subquery returns multiple rows where only one value is expected, the query fails.
+
+Q5 - Why is AVG() commonly used in Scalar Subqueries?
+     Because AVG() returns a single computed value.
+
+Q1 - What is a Multi-row Subquery?
+Answer - A Multi-row Subquery returns multiple rows and is typically used with operators like IN, ANY, or ALL.
+
+Q2 - Why can't "=" be used?
+Answer - Because "=" expects only one value.
+         Multi-row Subqueries return multiple values.
+
+Q3 - Which operator is commonly used?
+Answer - IN
+
+Q4 - Can AVG() create a Multi-row Subquery?
+     No. - AVG() returns one value. That is Scalar.
+
+Q5 - Which executes first?
+     Always Subquery. Then Outer Query.
+
+Q1 - What is a Correlated Subquery?
+Answer - A Correlated Subquery is a subquery that references columns from the outer query. It executes once for each row processed by the outer query.
+
+Q2 - What is the difference between a Normal Subquery and a Correlated Subquery?
+     Normal	        Correlated
+     Runs once	        Runs for every row
+     Independent	Depends on outer query
+     Usually faster	Can be slower on large tables
+
+Q3 - Why can Correlated Subqueries be slow?
+Answer: - Because the inner query executes repeatedly for every row of the outer query.
+
+Q4 - Can a Correlated Subquery return multiple rows?
+Yes, depending on the operator (EXISTS, IN, etc.), but many correlated subqueries are designed to return one value for each outer row.
+
+Q5 - Can Correlated Subqueries be replaced?
+     Yes. - Developers often replace them with: JOINs, Window Functions, CTEs to improve readability and performance.
+
+Q1 - What is EXISTS?
+Answer- EXISTS is an SQL operator that returns TRUE if the subquery returns at least one row; otherwise, it returns FALSE.
+
+Q2 - What does EXISTS return?
+Answer - Only TRUE or FALSE, It does not return the subquery data.
+
+Q3 - Can EXISTS use SELECT *?
+     Yes. - Database ignores the selected columns. It only checks Whether rows exist.
+
+Q4 - Difference between EXISTS and IN?
+     EXISTS	                                		IN
+     Checks existence	                       		        Checks membership in a list
+     Often efficient for correlated lookups		        Good for matching sets of values
+     Stops after finding a qualifying row for the outer record	Behavior depends on optimizer and query plan
+
+Q5 - What is NOT EXISTS?
+Answer - Returns rows only when the subquery returns zero rows.
+
+Q1 - What is ANY?
+Answer- ANY returns TRUE if the comparison is true for at least one value returned by the subquery.
+
+Q2 - What is ALL?
+Answer - ALL returns TRUE only if the comparison is true for every value returned by the subquery.
+
+Q3 - Difference?
+	ANY					ALL
+	At least one comparison must be TRUE	Every comparison must be TRUE
+	Less strict				More strict
+
+Q4 - Which is more restrictive?
+     ✅ ALL - Because every comparison must succeed.
+
+Q5 - Can ANY and ALL work with <, >, =, <=, >=, <>?
+     Yes. - They work with comparison operators.
+
+Q1 - Difference between UNION and UNION ALL?
+Answer - UNION removes duplicate rows, whereas UNION ALL returns all rows including duplicates.
+
+Q2 - Which is faster?
+Answer - ✅ UNION ALL -> Because it doesn't perform duplicate elimination.
+
+Q3 - Can UNION combine different numbers of columns?
+     No. -> The SELECT statements must return the same number of columns.
+
+Q4 - Can data types differ?
+     Ideally, corresponding columns should have compatible data types.
+
+Q5 - Does UNION sort data?
+UNION performs duplicate elimination, which may involve sorting or hashing depending on the database engine. 
+Do not rely on UNION to return rows in a specific order. If you need ordering, always use: ORDER BY, at the end of the UNION query.
+
+Q1 - What is a Stored Procedure?
+Answer - A Stored Procedure is a reusable program stored inside the database that contains SQL statements and procedural logic. 
+	 It can accept parameters and execute multiple database operations efficiently.
+
+Q2 - Why do companies use Stored Procedures?
+Answer - Reusability
+	 Security
+	 Reduced network calls
+	 Centralized business logic
+	 Easier maintenance
+
+Q3 - Can Stored Procedures accept parameters?
+     Yes. - Input parameters are commonly supported, and some databases also support output parameters.
+
+Q4 - Can Procedures return data?
+     Yes. - They can return result sets and, depending on the database, output parameters.
+
+Q5 - Can Procedures contain loops?
+     Yes. - Most enterprise databases support procedural control structures like IF, WHILE, and loops.
+
+
+If an interviewer asks:
+"Which JOIN is the most dangerous on large tables?"
+"CROSS JOIN can be the most expensive because it returns the Cartesian Product. 
+If the tables are large, the result can contain millions of rows, so it should only be used when every possible combination is actually required."
+**********************
+🏆 MNC Challenge
+Suppose you have:
+1-
+Customers
+ID	Name
+1	Sudha
+2	Ravi
+3	Priya
+Orders
+Order_ID	Customer_ID
+101	1
+102	1
+103	2
+Question - Write a query to display: Customer Name, Number of Orders, Even customers who haven't placed any orders.
+           Hint: You'll need a LEFT JOIN with GROUP BY and COUNT().
+************************************
+2-
+Employees
+ID	Name	Project_ID
+1	Sudha	101
+2	Ravi	102
+Projects
+Project_ID	Project
+101	Smart Prep
+102	Hospital AI
+103	E-Commerce
+Question - Display, Project Name, Employee Name, Even projects without employees.
+           Hint: RIGHT JOIN (or swap the tables and use LEFT JOIN).
+****************************************
+3-
+Employee Table
+Emp_ID	Name	Manager_ID
+1	CEO	NULL
+2	CTO	1
+3	HR Head	1
+4	Python Lead	2
+5	Developer	4
+Question: Write a query to display:
+Employee	Manager
+CTO	        CEO
+HR Head	        CEO
+Python Lead	CTO
+Developer	Python Lead
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+🏆 SQL Practice Set (Day 1 + Day 2)
+Employee Table
+Emp_ID	Name	Department	Salary	Age	City	Joining_Date	Manager
+101	Sudha	Python	50000	22	Pune	2024-01-10	Rahul
+102	Ravi	Java	65000	25	Mumbai	2023-03-18	NULL
+103	Priya	Testing	45000	24	Pune	2024-05-12	Ankit
+104	Amit	Python	70000	28	Delhi	2022-11-15	Rahul
+105	Neha	HR	40000	26	Mumbai	2025-02-20	NULL
+106	Karan	Python	80000	30	Pune	2021-06-05	Rahul
+107	Sneha	Testing	42000	23	Hyderabad	2024-07-30	Ankit
+108	Arjun	Java	90000	31	Bangalore	2020-09-25	NULL
+🟢 PART A — SELECT Practice
+Q1 Display all employee details.
+ 
+Q2 Display only Name, Salary and Department
+
+Q3 Display only employee names.
+
+Q4 Display all departments.
+
+Q5 Display all cities.
+
+🟢 PART B — WHERE Practice
+Q6 Show employees whose salary is greater than ₹50,000.
+
+Q7 Show employees younger than 25.
+
+Q8 Show employees from Pune.
+
+Q9 Show employees from Mumbai.
+
+Q10 Show employees whose department is Python.
+
+🟢 PART C — AND Practice
+Q11 Show Python developers whose salary is greater than ₹60,000.
+
+Q12 Show employees from Pune whose age is less than 25.
+
+Q13 Show Java developers from Mumbai.
+
+Q14 Show Testing employees older than 22.
+
+Q15 Show employees whose salary is greater than 40,000 and age greater than 24.
+
+🟢 PART D — OR Practice
+Q16 Show employees from Pune OR Mumbai.
+
+Q17 Show employees in Python OR Java department.
+
+Q18 Show employees whose salary is greater than ₹80,000 OR whose age is below 23.
+
+Q19 Show employees from Bangalore OR Hyderabad.
+
+Q20 Show employees managed by Rahul OR Ankit.
+
+🟢 PART E — NOT Practice
+Q21 Show employees NOT from Pune.
+
+Q22 Show employees NOT in HR department.
+
+Q23 Show employees whose salary is NOT greater than ₹50,000.
+
+Q24 Show employees NOT managed by Rahul.
+
+Q25 Show employees NOT from Mumbai.
+
+🟢 PART F — BETWEEN Practice
+Q26 Show employees whose salary is between ₹40,000 and ₹70,000.
+
+Q27 Show employees whose age is between 23 and 30.
+
+Q28 Show employees who joined between 2023-01-01 and 2024-12-31.
+
+Q29 Show employees whose Emp_ID is between 103 and 107.
+
+Q30 Show salaries between ₹45,000 and ₹90,000.
+
+🟢 PART G — IN Practice
+Q31 Show employees from Pune Mumbai Delhi
+ 
+Q32 Show employees working in Python Testing 
+
+Q33 Show employees whose age is 22 24 31
+
+Q34 Show employees managed by Rahul, Ankit, 
+
+Q35 Show employees NOT from Pune, Mumbai
+
+🟢 PART H — LIKE Practice
+Q36 Show employees whose name starts with A.
+
+Q37 Show employees whose name starts with S.
+
+Q38 Show employees whose name ends with a.
+
+Q39 Show employees whose name contains "ra".
+
+Q40 Show employees whose city starts with B.
+
+🟢 PART I — ORDER BY Practice
+Q41 Display employees by salary (ascending).
+
+Q42 Display employees by salary (descending).
+
+Q43 Sort employees by age.
+
+Q44 Sort employees by joining date (newest first).
+
+Q45 Sort employees first by department then salary descending.
+
+🟢 PART J — DISTINCT Practice
+Q46 Display unique cities.
+
+Q47 Display unique departments.
+
+Q48 Display unique managers.
+
+Q49 Display unique ages.
+
+Q50 Display unique combinations of Department City.
+
+🟢 PART K — LIMIT Practice
+Q51 Display first 5 employees.
+
+Q52 Display top 3 highest salary employees.
+
+Q53 Display youngest employee.
+
+Q54 Display oldest employee.
+
+Q55 Display highest-paid Python developer.
+
+🟢 PART L — Aggregate Functions
+Q56 Count total employees.
+
+Q57 Count employees in Python.
+
+Q58 Find total salary.
+
+Q59 Find average salary.
+
+Q60 Find highest salary.
+
+Q61 Find lowest salary.
+
+Q62 Find average age.
+
+Q63 Find total salary of Python department.
+
+Q64 Find highest salary in Testing.
+
+Q65 Count employees whose manager is Rahul.
+
+🟢 PART M — GROUP BY
+Q66 Count employees department-wise.
+
+Q67 Average salary department-wise.
+
+Q68 Maximum salary department-wise.
+
+Q69 Minimum salary department-wise.
+
+Q70 Total salary department-wise.
+
+Q71 Count employees city-wise.
+
+Q72 Average age city-wise.
+
+Q73 Count employees manager-wise.
+
+Q74 Maximum salary city-wise.
+
+Q75 Average salary manager-wise.
+
+🟢 PART N — HAVING
+Q76
+
+Show departments having more than 2 employees.
+
+Q77
+
+Show departments whose average salary is greater than ₹60,000.
+
+Q78
+
+Show cities having more than one employee.
+
+Q79
+
+Show managers managing more than two employees.
+
+Q80
+
+Show departments whose maximum salary is above ₹75,000.
+
+🟢 PART O — CASE
+Q81 Show salary status: High, Medium, Low
+
+Q82 Display age category: Young, Adult, Senior
+
+Q83 Display department type: Technical, Non-Technical
+
+Q84 Display salary bonus: Salary >70000 Bonus Eligible Else Not Eligible
+
+Q85 Display experience category using joining year.
+
+🟢 PART P — NULL
+Q86 Show employees whose manager is NULL.
+
+Q87 Show employees whose manager is NOT NULL.
+
+Q88 Replace NULL managers with
+
+"No Manager".
+
+Q89 Count employees whose manager is NULL.
+
+Q90 Display manager name using COALESCE.
+
+🔥 MNC Interview Challenge (Very Important)
+Q91 Find the second highest salary.
+
+Q92 Find employees earning more than the average salary.
+
+Q93 Find departments having the highest average salary.
+
+Q94 Find cities where more than two employees work.
+
+Q95 Find the total salary of employees from Pune.
+
+Q96 Find the average salary of employees whose age is above 25.
+
+Q97 Find departments where the minimum salary is greater than ₹45,000.
+
+Q98 Show employees who joined after 2023 and whose salary is above ₹50,000.
+
+Q99 Display the top 2 youngest Python developers.
+
+Q100 Write a query to display: Department, Number of Employees, Highest Salary, Lowest Salary, Average Salary, Total Salary
+     But display only departments having at least 2 employees, and sort the result by highest average salary.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+🏆 SQL MASTER COURSE
+🟢 PART 10
+Advanced SQL
+Normalization
+Denormalization
+Window Functions
+ROW_NUMBER()
+RANK()
+DENSE_RANK()
+CTE (Common Table Expressions)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+📘 PART 3.6 – NORMALIZATION & DENORMALIZATION
+
+What Problems Does Normalization Solve?
+1. Insert Anomaly
+
+Cannot insert data easily.
+
+Example
+
+Need to add
+
+New Course
+
+No student yet.
+
+Where will you store it?
+
+2. Update Anomaly
+
+One value stored
+
+1000 times.
+
+Need
+
+1000 updates.
+
+Mistake possible.
+
+3. Delete Anomaly
+
+Delete
+
+Last Student
+
+↓
+
+Course information
+
+also lost.
+
+First Normal Form (1NF)
+Rule
+
+Every column
+
+must contain
+
+only
+
+ONE value.
+
+Wrong
+
+Student	Courses
+Sudha	SQL, Python, Django
+
+One column
+
+contains
+
+3 values.
+
+❌ Not 1NF.
+
+Correct
+
+Student	Course
+Sudha	SQL
+Sudha	Python
+Sudha	Django
+
+Now
+
+each column
+
+contains
+
+only one value.
+
+✅ 1NF
+
+Memory Trick
+
+1NF
+
+↓
+
+One Cell
+
+↓
+
+One Value
+Second Normal Form (2NF)
+
+Rule
+
+Table must already be
+
+1NF
+
+AND
+
+Every non-key column
+
+must depend
+
+on the entire Primary Key.
+
+Example
+
+Student_Course
+
+Student_ID	Course_ID	Student_Name	Course_Name
+
+Primary Key
+
+Student_ID
+
++
+
+Course_ID
+
+Problem
+
+Student_Name
+
+depends only on
+
+Student_ID
+
+Not on Course_ID.
+
+Duplicate.
+
+Solution
+
+Split tables.
+
+Students
+
+Student_ID	Student_Name
+
+Courses
+
+Course_ID	Course_Name
+
+Enrollment
+
+Student_ID	Course_ID
+
+Now
+
+2NF achieved.
+
+Memory Trick
+
+2NF
+
+↓
+
+Remove Partial Dependency
+Third Normal Form (3NF)
+
+Rule
+
+Table
+
+must already be
+
+2NF
+
+AND
+
+No
+
+Transitive Dependency.
+
+What is Transitive Dependency?
+
+Suppose
+
+Employee Table
+
+Emp_ID	Department_ID	Department_Name
+
+Department_Name
+
+depends on
+
+Department_ID
+
+NOT
+
+Emp_ID
+
+So
+
+Department_Name
+
+should not stay here.
+
+Create
+
+Department Table.
+
+Employee
+
+Emp_ID	Department_ID
+
+Department
+
+Department_ID	Department_Name
+
+Now
+
+3NF achieved.
+
+Memory Trick
+
+3NF
+
+↓
+
+Remove
+
+Indirect Dependency
+BCNF (Boyce-Codd Normal Form)
+
+Interview Concept ⭐⭐⭐⭐
+
+BCNF
+
+is
+
+slightly stricter
+
+than
+
+3NF.
+
+Rule
+
+Every determinant
+
+must be
+
+a Candidate Key.
+
+Freshers are usually expected to know:
+
+"BCNF is an advanced version of 3NF that removes some rare anomalies not handled by 3NF."
+
+That answer is enough for most entry-level interviews.
+
+Visual Summary
+Bad Database
+
+↓
+
+1NF
+
+↓
+
+One Value Per Cell
+
+↓
+
+2NF
+
+↓
+
+Remove Partial Dependency
+
+↓
+
+3NF
+
+↓
+
+Remove Transitive Dependency
+
+↓
+
+BCNF
+
+↓
+
+Advanced Normalization
+Real Amazon Example
+
+Customer Table
+
+Customer	City	State	Country
+
+Millions
+
+of duplicate
+
+City
+
+State
+
+Country
+
+Normalization
+
+↓
+
+Customer
+
+↓
+
+City Table
+
+↓
+
+Country Table
+
+Fast
+
+Organized
+
+Reliable
+
+Banking Example
+
+Account Table
+
+Wrong
+
+Account	Branch_Name	Branch_Address
+
+Thousands
+
+of accounts
+
+repeat
+
+same branch.
+
+Normalize
+
+↓
+
+Branch Table
+
+↓
+
+Account Table
+
+Hospital Example
+
+Doctor Table
+
+Wrong
+
+Doctor	Department_Name
+
+Normalize
+
+↓
+
+Department Table
+
+↓
+
+Doctor Table
+
+Python Example
+
+Without Normalization
+
+student = {
+
+"name":"Sudha",
+
+"city":"Pune",
+
+"state":"MH",
+
+"country":"India"
+}
+
+1000 students
+
+↓
+
+1000 copies
+
+of Pune.
+
+Normalized
+
+city = {
+
+"id":1,
+
+"name":"Pune"
+}
+
+student = {
+
+"name":"Sudha",
+
+"city_id":1
+}
+
+Exactly
+
+same idea.
+
+Django Example
+
+Instead of
+
+class Student(models.Model):
+
+    city = models.CharField(max_length=100)
+
+Better
+
+class City(models.Model):
+
+    name = models.CharField(max_length=100)
+
+class Student(models.Model):
+
+    city = models.ForeignKey(City,on_delete=models.CASCADE)
+
+This is normalization using relationships.
+
+What is Denormalization?
+
+Now comes
+
+Opposite Concept.
+
+Definition
+
+Denormalization means
+
+combining tables
+
+to improve
+
+read performance.
+
+Memory Trick
+
+Denormalization
+
+↓
+
+Duplicate Allowed
+
+↓
+
+Faster Reading
+
+Example
+
+Normalized
+
+Customer Table
+
+City Table
+
+Country Table
+
+Need
+
+3 JOINS.
+
+Denormalized
+
+Customer Table
+
+Customer	City	Country
+
+No JOIN.
+
+Fast Query.
+
+More duplicate data.
+
+Why Companies Denormalize?
+
+Large reporting systems.
+
+Analytics.
+
+Dashboards.
+
+Read-heavy applications.
+
+Example
+
+Amazon Sales Dashboard.
+
+Instead of joining
+
+10 tables,
+
+they store
+
+some duplicate information
+
+to make reports faster.
+
+Normalization vs Denormalization
+Feature	Normalization	Denormalization
+Duplicate Data	Less	More
+Storage	Less	More
+Read Speed	Slower (joins)	Faster
+Write Speed	Generally better consistency	Can require updating duplicate data
+Maintenance	Easy	Harder
+Use Case	OLTP systems (transactions)	Reporting/Analytics (OLAP)
+Internal Thinking
+Need Data Integrity?
+
+↓
+
+Normalization
+
+----------------
+
+Need Faster Reports?
+
+↓
+
+Denormalization
+MNC Technical HR Questions
+Q1
+
+What is Normalization?
+
+Professional Answer
+
+Normalization is the process of organizing database tables to reduce redundancy and improve data integrity by dividing data into related tables.
+
+Q2
+
+Why do we normalize databases?
+
+Answer
+
+Reduce duplicate data
+Prevent anomalies
+Improve consistency
+Simplify maintenance
+Q3
+
+Explain 1NF.
+
+Every column
+
+must contain
+
+one value only.
+
+Q4
+
+Explain 2NF.
+
+Remove
+
+Partial Dependency.
+
+Q5
+
+Explain 3NF.
+
+Remove
+
+Transitive Dependency.
+
+Q6
+
+What is Denormalization?
+
+Answer
+
+Denormalization combines related data to reduce joins and improve read performance, at the cost of increased redundancy.
+
+Q7
+
+When would you use Denormalization?
+
+Answer
+
+For reporting systems, dashboards, and analytics where read performance is more important than minimizing duplicate data.
+
+Common Mistakes
+❌ Mistake 1
+
+Thinking more tables mean a bad design.
+
+Wrong.
+
+More well-designed related tables often indicate good normalization.
+
+❌ Mistake 2
+
+Thinking normalization always improves performance.
+
+Wrong.
+
+It improves data integrity, but excessive normalization may require more JOIN operations.
+
+❌ Mistake 3
+
+Thinking denormalization is bad.
+
+Wrong.
+
+It is intentionally used when faster read performance is required.
+
+Smart Prep Example
+
+Your project has
+
+Students
+
+Courses
+
+Enrollments
+
+Instead of storing
+
+Student Name
+
+Course Name
+
+Instructor Name
+
+in one huge table,
+
+create separate tables
+
+and connect them using Foreign Keys.
+
+That's proper normalization.
+
+🏆 Interview Tip
+
+If an interviewer asks:
+
+"Would you always normalize every database?"
+
+A strong answer is:
+
+"No. For transactional systems like banking or e-commerce orders, I prefer normalization to maintain consistency and reduce redundancy. For reporting systems or dashboards where read performance is critical, controlled denormalization can be beneficial."
+
+⭐⭐⭐⭐⭐ This is the kind of balanced answer interviewers appreciate because it shows you understand the trade-offs.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+📘 PART 3.7 – WINDOW FUNCTIONS & CTE (⭐⭐⭐⭐⭐ Amazon, Microsoft & Oracle Favorite)
+🏆 Congratulations Champ!
+
+This is the final topic of your 3-Day SQL Master Course.
+
+This topic is considered Advanced SQL.
+
+Many developers know JOINs.
+
+Many developers know GROUP BY.
+
+But when interviewers ask
+
+ROW_NUMBER(), RANK(), DENSE_RANK(), LAG(), LEAD(), CTE
+
+many freshers cannot answer.
+
+Today, you'll understand them like an MNC developer.
+
+Before Learning Window Functions
+
+Suppose Employee table
+
+Emp_ID	Name	Department	Salary
+101	Sudha	Python	90000
+102	Ravi	Python	70000
+103	Priya	Python	70000
+104	Amit	Python	50000
+
+Manager asks
+
+Rank employees according to salary.
+
+How?
+
+Window Functions.
+
+What is a Window Function?
+✅ Simple Definition
+
+A Window Function performs calculations across a set of rows without reducing the number of rows.
+
+✅ Technical Definition
+
+A Window Function performs aggregate or ranking calculations over a defined window (set of rows) while keeping every individual row in the result.
+
+Memory Trick
+Window Function
+
+↓
+
+Looks at Multiple Rows
+
+↓
+
+Returns Result
+
+↓
+
+Keeps Every Row
+
+Unlike GROUP BY,
+
+Window Functions
+
+do NOT merge rows.
+
+OVER()
+
+Before every Window Function
+
+comes
+
+OVER()
+
+Think
+
+OVER()
+
+↓
+
+Which rows
+
+should I calculate on?
+
+Without OVER
+
+Window Functions
+
+cannot work.
+
+ROW_NUMBER()
+Definition
+
+Assigns
+
+Unique Number
+
+to every row.
+
+Example
+
+SELECT
+Name,
+Salary,
+ROW_NUMBER() OVER(ORDER BY Salary DESC) AS Rank_No
+FROM Employee;
+
+Output
+
+Name	Salary	Row_Number
+Sudha	90000	1
+Ravi	70000	2
+Priya	70000	3
+Amit	50000	4
+
+Notice
+
+Even though
+
+Ravi
+
+Priya
+
+have same salary,
+
+numbers
+
+are different.
+
+Memory Trick
+
+ROW_NUMBER
+
+↓
+
+Always Unique
+RANK()
+
+Now
+
+Use
+
+SELECT
+Name,
+Salary,
+RANK() OVER(ORDER BY Salary DESC) AS Rank
+FROM Employee;
+
+Output
+
+Name	Salary	Rank
+Sudha	90000	1
+Ravi	70000	2
+Priya	70000	2
+Amit	50000	4
+
+Notice
+
+Rank
+
+3
+
+missing.
+
+Because
+
+Ravi
+
+Priya
+
+share Rank 2.
+
+Memory Trick
+
+RANK
+
+↓
+
+Duplicates
+
+↓
+
+Skip Next Rank
+DENSE_RANK()
+
+Example
+
+SELECT
+Name,
+Salary,
+DENSE_RANK() OVER(ORDER BY Salary DESC)
+FROM Employee;
+
+Output
+
+Name	Salary	Dense Rank
+Sudha	90000	1
+Ravi	70000	2
+Priya	70000	2
+Amit	50000	3
+
+Notice
+
+No skipped number.
+
+Memory Trick
+
+DENSE_RANK
+
+↓
+
+No Missing Numbers
+Difference
+Function	Duplicate Rank?	Skip Numbers?
+ROW_NUMBER	No	No
+RANK	Yes	Yes
+DENSE_RANK	Yes	No
+LEAD()
+
+Need
+
+Next Row.
+
+Example
+
+SELECT
+Name,
+Salary,
+LEAD(Salary) OVER(ORDER BY Salary DESC)
+AS NextSalary
+FROM Employee;
+
+Output
+
+Name	Salary	NextSalary
+Sudha	90000	70000
+Ravi	70000	70000
+Priya	70000	50000
+Amit	50000	NULL
+
+Memory Trick
+
+LEAD
+
+↓
+
+Look Forward
+LAG()
+
+Need
+
+Previous Row.
+
+SELECT
+Name,
+Salary,
+LAG(Salary) OVER(ORDER BY Salary DESC)
+AS PreviousSalary
+FROM Employee;
+
+Output
+
+Name	Salary	PreviousSalary
+Sudha	90000	NULL
+Ravi	70000	90000
+Priya	70000	70000
+Amit	50000	70000
+
+Memory Trick
+
+LAG
+
+↓
+
+Look Back
+PARTITION BY
+
+Suppose
+
+Manager asks
+
+Rank employees
+
+department wise.
+
+SELECT
+Name,
+Department,
+Salary,
+RANK() OVER(
+PARTITION BY Department
+ORDER BY Salary DESC)
+FROM Employee;
+
+Now
+
+Ranking starts
+
+again
+
+for every department.
+
+Python
+
+1
+
+2
+
+3
+
+Java
+
+1
+
+2
+
+3
+
+Internal Working
+Department
+
+↓
+
+Split Groups
+
+↓
+
+Python
+
+↓
+
+Rank
+
+↓
+
+Java
+
+↓
+
+Rank
+Amazon Example
+
+Products
+
+Need
+
+Top Selling Product
+
+in every Category.
+
+Use
+
+PARTITION BY Category
+Banking Example
+
+Rank Customers
+
+inside
+
+every Branch.
+
+Hospital Example
+
+Rank Doctors
+
+inside
+
+every Department.
+
+Python Example
+students = sorted(
+students,
+key=lambda x:x["marks"],
+reverse=True
+)
+
+Window Functions
+
+perform similar ordered calculations
+
+inside SQL.
+
+What is CTE?
+
+Now
+
+Another important topic.
+
+CTE
+
+(Common Table Expression)
+
+Definition
+
+A CTE is a temporary named result set that exists only for the duration of a single SQL statement.
+
+Memory Trick
+
+WITH
+
+↓
+
+Temporary Table
+
+↓
+
+Readable SQL
+
+Syntax
+
+WITH HighSalary AS
+(
+SELECT *
+FROM Employee
+WHERE Salary>70000
+)
+
+SELECT *
+FROM HighSalary;
+
+Output
+
+Employees
+
+having salary
+
+greater than
+
+Internal Working
+WITH
+
+↓
+
+Temporary Result
+
+↓
+
+Main Query Uses It
+
+↓
+
+Destroyed
+
+After query finishes,
+
+CTE disappears.
+
+Why Companies Use CTE
+
+Without CTE
+
+Huge Query
+
+500 lines.
+
+Impossible
+
+to understand.
+
+With CTE
+
+WITH Sales AS(...)
+
+WITH Orders AS(...)
+
+WITH Customer AS(...)
+
+Much cleaner.
+
+Recursive CTE (Interview Concept)
+
+Used for
+
+Hierarchy.
+
+Example
+
+Company Employees.
+
+CEO
+
+↓
+
+Manager
+
+↓
+
+Team Lead
+
+↓
+
+Developer
+
+Recursive CTE
+
+can traverse
+
+tree structures.
+
+Freshers usually only need to know:
+
+"Recursive CTE is used to work with hierarchical data such as organization charts, folder structures, or category trees."
+
+Django Equivalent
+
+Django ORM does not have first-class support for CTEs.
+
+Developers typically use:
+
+Raw SQL (Model.objects.raw())
+Database-specific libraries (such as packages that add CTE support)
+MNC Technical HR Questions
+Q1
+
+Difference between
+
+ROW_NUMBER
+
+and
+
+RANK?
+
+Answer
+
+ROW_NUMBER
+
+always unique.
+
+RANK
+
+allows duplicates
+
+and skips rank numbers.
+
+Q2
+
+Difference
+
+between
+
+RANK
+
+and
+
+DENSE_RANK?
+
+Answer
+
+DENSE_RANK
+
+doesn't skip numbers.
+
+RANK
+
+does.
+
+Q3
+
+What is PARTITION BY?
+
+Answer
+
+PARTITION BY divides rows into groups so that the window function is calculated separately for each group.
+
+Q4
+
+What is LEAD?
+
+Answer
+
+Returns the value
+
+from the next row.
+
+Q5
+
+What is LAG?
+
+Answer
+
+Returns the value
+
+from the previous row.
+
+Q6
+
+What is CTE?
+
+Answer
+
+A temporary named result set that improves readability and simplifies complex SQL queries.
+
+Q7
+
+Difference between View and CTE?
+
+View	CTE
+Stored permanently in database	Exists only during one query
+Reusable across queries	Temporary
+Created using CREATE VIEW	Created using WITH
+Common Mistakes
+
+❌ Thinking
+
+GROUP BY
+
+and
+
+Window Functions
+
+are same.
+
+Wrong.
+
+GROUP BY
+
+reduces rows.
+
+Window Functions
+
+keep rows.
+
+❌ Thinking
+
+CTE
+
+stores data permanently.
+
+Wrong.
+
+Temporary.
+
+❌ Forgetting
+
+OVER()
+
+No OVER
+
+↓
+
+Window Function
+
+will not work.
+
+Amazon-Level Interview Question
+
+Employee Table
+
+Name	Salary
+A	100
+B	90
+C	90
+D	80
+
+What is the output?
+
+SELECT
+Name,
+RANK() OVER(ORDER BY Salary DESC)
+FROM Employee;
+
+Answer
+
+Name	Rank
+A	1
+B	2
+C	2
+D	4
+Smart Prep Example
+
+Suppose
+
+You want to display the Top 3 students in each course.
+
+SELECT *
+FROM
+(
+SELECT
+Name,
+Course,
+Marks,
+ROW_NUMBER() OVER(
+PARTITION BY Course
+ORDER BY Marks DESC
+) AS rn
+FROM Student
+) t
+WHERE rn <= 3;
+
+This is a very common interview pattern.
+
+🎯 Summary of Window Functions
+Function	Purpose
+ROW_NUMBER()	Unique numbering
+RANK()	Ranking with gaps
+DENSE_RANK()	Ranking without gaps
+LEAD()	Next row value
+LAG()	Previous row value
+OVER()	Defines the window
+PARTITION BY	Creates groups inside the window
+CTE (WITH)	Temporary named result set
+🏆 Final Interview Tip
+
+
