@@ -2149,4 +2149,24 @@ PARTITION BY	Creates groups inside the window
 CTE (WITH)	Temporary named result set
 🏆 Final Interview Tip
 
-
+# For GitHub README File Useful Symbols
+🚀
+🔥
+✨
+⭐
+📚
+📖
+💻
+🗄️
+📂
+📌
+✅
+❌
+🔹
+🔸
+👉
+🎯
+🛠️
+⚡
+💡
+🏆
