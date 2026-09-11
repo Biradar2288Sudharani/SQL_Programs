@@ -2149,24 +2149,639 @@ PARTITION BY	Creates groups inside the window
 CTE (WITH)	Temporary named result set
 🏆 Final Interview Tip
 
-# For GitHub README File Useful Symbols
-🚀
-🔥
-✨
-⭐
-📚
-📖
-💻
-🗄️
-📂
-📌
-✅
-❌
-🔹
-🔸
-👉
-🎯
-🛠️
-⚡
-💡
-🏆
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+20. Departments having more than 5 employees
+SELECT dept_id, COUNT(*) AS employee_count
+FROM employees
+GROUP BY dept_id
+HAVING COUNT(*) > 5;
+Important interview concept
+
+WHERE filters rows.
+
+HAVING filters groups.
+
+WHERE  → before grouping
+GROUP BY
+HAVING  → after grouping
+🟠 LEVEL 4 — JOINS
+
+Champ, JOIN questions are extremely important for Python/Django interviews.
+
+21. INNER JOIN
+
+Get employee name and department name.
+
+SELECT e.emp_name, d.dept_name
+FROM employees e
+INNER JOIN departments d
+ON e.dept_id = d.dept_id;
+How it works
+
+SQL matches:
+
+employees.dept_id
+        =
+departments.dept_id
+
+Only matching records are returned.
+
+22. LEFT JOIN
+
+Show all employees, even if they don't belong to a department.
+
+SELECT e.emp_name, d.dept_name
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id;
+Key idea
+
+LEFT JOIN keeps everything from the left table.
+
+23. Find employees without a department
+SELECT e.emp_name
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id
+WHERE d.dept_id IS NULL;
+
+This is a very common interview pattern.
+
+24. RIGHT JOIN
+SELECT e.emp_name, d.dept_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.dept_id = d.dept_id;
+
+Keeps all records from the right table.
+
+25. Join three tables
+
+Find customer names and their order amounts.
+
+SELECT c.customer_name, o.order_id, o.amount
+FROM customers c
+JOIN orders o
+ON c.customer_id = o.customer_id;
+
+You can extend this to multiple tables:
+
+SELECT e.emp_name, d.dept_name
+FROM employees e
+JOIN departments d
+ON e.dept_id = d.dept_id;
+26. Customers who have never placed an order
+SELECT c.customer_name
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+Interview pattern
+
+This is worth remembering:
+
+LEFT JOIN
+...
+WHERE right_table.id IS NULL
+
+means:
+
+Find records in the left table that don't have a match.
+
+🔴 LEVEL 5 — SUBQUERIES
+27. Find employees earning more than average salary
+SELECT *
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+How SQL thinks
+
+Inner query:
+
+SELECT AVG(salary)
+FROM employees;
+
+might return:
+
+60000
+
+Then outer query becomes conceptually:
+
+WHERE salary > 60000
+
+This is a classic interview question.
+
+28. Find employee with highest salary
+SELECT *
+FROM employees
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employees
+);
+29. Find second-highest salary
+Method 1 — MAX
+SELECT MAX(salary) AS second_highest
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+This is one of the most famous SQL interview questions.
+
+30. Find employees earning more than their department average
+SELECT e.*
+FROM employees e
+WHERE e.salary > (
+    SELECT AVG(e2.salary)
+    FROM employees e2
+    WHERE e2.dept_id = e.dept_id
+);
+
+This is a correlated subquery.
+
+The inner query depends on the current employee's department.
+
+31. Find employees who work in the IT department
+SELECT *
+FROM employees
+WHERE dept_id = (
+    SELECT dept_id
+    FROM departments
+    WHERE dept_name = 'IT'
+);
+🟣 LEVEL 6 — DISTINCT / DUPLICATES
+32. Find unique cities
+SELECT DISTINCT city
+FROM customers;
+
+If:
+
+Pune
+Pune
+Mumbai
+Delhi
+Delhi
+
+Result:
+
+Pune
+Mumbai
+Delhi
+33. Find duplicate emails
+SELECT email, COUNT(*) AS count
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+Interview importance
+
+⭐⭐⭐⭐⭐
+
+This pattern is extremely useful.
+
+34. Find duplicate employee names
+SELECT emp_name, COUNT(*)
+FROM employees
+GROUP BY emp_name
+HAVING COUNT(*) > 1;
+🔵 LEVEL 7 — CASE
+35. Categorize salaries
+SELECT emp_name,
+       salary,
+       CASE
+           WHEN salary >= 100000 THEN 'High'
+           WHEN salary >= 50000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_category
+FROM employees;
+Why use CASE?
+
+It allows conditional logic inside SQL.
+
+Very useful for reports.
+
+36. Count high/low salary employees
+SELECT
+    SUM(CASE WHEN salary >= 50000 THEN 1 ELSE 0 END)
+        AS high_salary_count
+FROM employees;
+
+This is a more advanced aggregation pattern.
+
+🟢 LEVEL 8 — DATE QUERIES
+37. Employees hired after January 1, 2025
+SELECT *
+FROM employees
+WHERE hire_date > '2025-01-01';
+38. Employees hired in 2025
+
+MySQL:
+
+SELECT *
+FROM employees
+WHERE YEAR(hire_date) = 2025;
+39. Find employees hired in the last 30 days
+SELECT *
+FROM employees
+WHERE hire_date >= CURRENT_DATE - INTERVAL 30 DAY;
+40. Orders placed today
+SELECT *
+FROM orders
+WHERE DATE(order_date) = CURRENT_DATE;
+41. Monthly sales
+SELECT
+    YEAR(order_date) AS year,
+    MONTH(order_date) AS month,
+    SUM(amount) AS total_sales
+FROM orders
+GROUP BY YEAR(order_date), MONTH(order_date);
+Why important?
+
+This resembles a real Django admin/reporting requirement.
+
+🟠 LEVEL 9 — UPDATE / DELETE
+42. Update employee salary
+UPDATE employees
+SET salary = 60000
+WHERE emp_id = 101;
+
+⚠️ Always be careful with UPDATE.
+
+Without WHERE:
+
+UPDATE employees
+SET salary = 60000;
+
+you may update every employee.
+
+43. Increase salary by 10%
+UPDATE employees
+SET salary = salary * 1.10
+WHERE dept_id = 2;
+
+This uses the existing value to calculate the new value.
+
+44. Delete an employee
+DELETE FROM employees
+WHERE emp_id = 101;
+
+Again:
+
+DELETE + WHERE → selected rows
+DELETE without WHERE → all rows
+45. Delete duplicate records
+
+A common interview problem, but the exact query depends on your table's primary key and database version.
+
+For example, conceptually:
+
+DELETE e1
+FROM employees e1
+JOIN employees e2
+ON e1.email = e2.email
+AND e1.emp_id > e2.emp_id;
+Idea
+
+Keep the smallest emp_id and delete later duplicates.
+
+⚠️ Never test destructive queries directly on production data.
+
+🔴 LEVEL 10 — WINDOW FUNCTIONS
+
+Champ, if you're targeting modern Python/full-stack roles, don't skip these.
+
+46. Rank employees by salary
+SELECT
+    emp_name,
+    salary,
+    RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+Example:
+
+Salary    Rank
+100000     1
+90000      2
+90000      2
+80000      4
+47. ROW_NUMBER()
+SELECT
+    emp_name,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+FROM employees;
+
+Unlike RANK(), every row receives a unique number.
+
+48. DENSE_RANK()
+SELECT
+    emp_name,
+    salary,
+    DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+Example:
+
+100000 → 1
+90000  → 2
+90000  → 2
+80000  → 3
+Remember
+ROW_NUMBER → always unique
+RANK       → gaps after ties
+DENSE_RANK → no gaps after ties
+49. Highest-paid employee in each department
+SELECT *
+FROM (
+    SELECT
+        e.*,
+        ROW_NUMBER() OVER (
+            PARTITION BY dept_id
+            ORDER BY salary DESC
+        ) AS rn
+    FROM employees e
+) x
+WHERE rn = 1;
+
+🔥 This is an excellent interview-level query.
+
+PARTITION BY dept_id means:
+
+Rank employees separately inside each department.
+
+50. Top 3 salaries in each department
+SELECT *
+FROM (
+    SELECT
+        e.*,
+        DENSE_RANK() OVER (
+            PARTITION BY dept_id
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees e
+) x
+WHERE salary_rank <= 3;
+🟣 LEVEL 11 — CTE
+51. Basic CTE
+WITH high_salary AS (
+    SELECT *
+    FROM employees
+    WHERE salary > 80000
+)
+SELECT *
+FROM high_salary;
+What is CTE?
+
+CTE = Common Table Expression
+
+It creates a temporary named result for the duration of the query.
+
+Think:
+
+WITH name AS (...)
+        ↓
+use name
+52. CTE for average salary
+WITH avg_salary AS (
+    SELECT AVG(salary) AS avg_sal
+    FROM employees
+)
+SELECT e.*
+FROM employees e
+CROSS JOIN avg_salary a
+WHERE e.salary > a.avg_sal;
+
+Useful when a query becomes complicated and you want readable SQL.
+
+🟡 LEVEL 12 — UNION
+53. Combine two result sets
+SELECT emp_name AS name
+FROM employees
+
+UNION
+
+SELECT customer_name AS name
+FROM customers;
+
+UNION combines results and removes duplicates.
+
+54. UNION ALL
+SELECT emp_name AS name
+FROM employees
+
+UNION ALL
+
+SELECT customer_name AS name
+FROM customers;
+
+UNION ALL keeps duplicates.
+
+Interview difference
+UNION      → removes duplicates
+UNION ALL  → keeps duplicates + generally avoids duplicate-removal work
+🔥 LEVEL 13 — NULL / COALESCE
+55. Replace NULL email with a default value
+SELECT
+    emp_name,
+    COALESCE(email, 'Not Provided') AS email
+FROM employees;
+How it works
+
+If:
+
+email = NULL
+
+result:
+
+Not Provided
+
+Otherwise it returns the actual email.
+
+56. Find employees with missing email
+SELECT *
+FROM employees
+WHERE email IS NULL;
+🔥 LEVEL 14 — CONSTRAINTS
+57. Create table with constraints
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE,
+    salary DECIMAL(10,2) CHECK (salary > 0),
+    dept_id INT,
+    FOREIGN KEY (dept_id)
+        REFERENCES departments(dept_id)
+);
+Know these:
+PRIMARY KEY → uniquely identifies a row
+FOREIGN KEY → connects tables
+NOT NULL     → value required
+UNIQUE       → prevents duplicate values
+CHECK        → validates a condition
+DEFAULT      → supplies a default value
+🔴 LEVEL 15 — TRANSACTIONS
+
+These are very important for backend developers.
+
+58. Transaction example
+START TRANSACTION;
+
+UPDATE accounts
+SET balance = balance - 5000
+WHERE account_id = 1;
+
+UPDATE accounts
+SET balance = balance + 5000
+WHERE account_id = 2;
+
+COMMIT;
+Why?
+
+Imagine transferring ₹5,000:
+
+Account A: -5000
+Account B: +5000
+
+Both operations should succeed together.
+
+59. Rollback
+START TRANSACTION;
+
+UPDATE employees
+SET salary = salary * 2;
+
+ROLLBACK;
+
+The changes are undone if the transaction hasn't been committed.
+
+60. Commit
+START TRANSACTION;
+
+UPDATE employees
+SET salary = salary * 1.10;
+
+COMMIT;
+
+COMMIT permanently saves the transaction's changes.
+
+🏆 BONUS — 10 QUESTIONS I REALLY WANT YOU TO MASTER
+
+If you're preparing for interviews, Champ, don't just memorize the 60 queries above.
+
+Be able to write these from scratch without looking:
+
+1️⃣ Second-highest salary
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);
+2️⃣ Third-highest salary
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;
+3️⃣ Employees earning above average
+SELECT *
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+4️⃣ Duplicate records
+SELECT email, COUNT(*)
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+5️⃣ Employees without department
+SELECT e.*
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id
+WHERE d.dept_id IS NULL;
+6️⃣ Highest salary per department
+SELECT *
+FROM (
+    SELECT e.*,
+           ROW_NUMBER() OVER (
+               PARTITION BY dept_id
+               ORDER BY salary DESC
+           ) rn
+    FROM employees e
+) x
+WHERE rn = 1;
+7️⃣ Department-wise employee count
+SELECT dept_id, COUNT(*) AS total
+FROM employees
+GROUP BY dept_id;
+8️⃣ Department average salary
+SELECT dept_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept_id;
+9️⃣ Customers without orders
+SELECT c.*
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+🔟 Top 3 salaries in every department
+SELECT *
+FROM (
+    SELECT e.*,
+           DENSE_RANK() OVER (
+               PARTITION BY dept_id
+               ORDER BY salary DESC
+           ) AS rnk
+    FROM employees e
+) x
+WHERE rnk <= 3;
+🎯 What I Want You to Know for a Python/Django Interview
+
+Don't study these 60 as 60 isolated questions.
+
+Organize them into 10 SQL skills:
+
+01. SELECT / WHERE / ORDER BY
+02. Aggregate Functions
+03. GROUP BY / HAVING
+04. JOINs
+05. Subqueries
+06. CASE / NULL handling
+07. CTEs
+08. Window Functions
+09. INSERT / UPDATE / DELETE
+10. Transactions / Constraints
+
+And there's one more thing that will make your preparation much more valuable for Django:
+
+SQL ↔ Django ORM connection
+
+For example:
+
+SELECT *
+FROM employees
+WHERE salary > 50000;
+
+Django ORM:
+
+Employee.objects.filter(salary__gt=50000)
+
+And:
+
+SELECT dept_id, AVG(salary)
+FROM employees
+GROUP BY dept_id;
+
+Django ORM uses concepts such as:
+
+Employee.objects.values("dept_id").annotate(
+    avg_salary=Avg("salary")
+)
+
+That SQL + Django ORM connection is exactly where your preparation becomes Full-Stack/Python-developer focused rather than just generic SQL preparation. 🔥
+
+If you master the 60 above + their Django ORM equivalents + the reasoning behind JOIN/GROUP BY/subquery/window-function questions, 
+you'll have a genuinely strong SQL base for junior Python/Django/full-stack interviews.

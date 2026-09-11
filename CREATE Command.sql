@@ -154,17 +154,36 @@ DELETE FROM Employee WHERE empid IN (101, 102, 103);
 -- If you want to delete the columns, use ALTER Command. like
 ALTER TABLE Employee DROP COLUMN domain;
 
+-- Create temporary table - It normally disappears when the current database session ends.
+CREATE TEMPORARY TABLE temp_students ( id INT, name VARCHAR(50) );
 
+-- CREATE TABLE Using LIKE -Creates a new table with the structure of an existing table. Mainly copies the table definition, not the table's rows.  
+CREATE TABLE student_backup LIKE student;
 
+--  CREATE TABLE Using AS SELECT - Creates a table from the result of a SELECT.
+CREATE TABLE pune_students AS
+SELECT *
+FROM student
+WHERE city = 'Pune';
 
+-- CREATE Using INDEX - Indexes can improve reads but consume storage and can make INSERT/UPDATE/DELETE more expensive, To improve the speed of searches on selected columns.
+CREATE INDEX idx_student_name
+ON student(name); 
 
+-- CREATE Using UNIQUE INDEX - Creates an index that requires indexed values to be unique.
+CREATE UNIQUE INDEX idx_student_email
+ON students(email);
 
+-- CREATE Using FULLTEXT INDEX - Creates an index for full-text searching,To efficiently search words/phrases in text columns.
+CREATE FULLTEXT INDEX idx_city
+ON student(city);
 
+-- CREATE Using VIEW - Creates a virtual table based on a query, To simplify complex queries and control which data users can see.A normal view doesn't store a separate copy of the result data.
+CREATE VIEW student_details AS
+SELECT std_id, name, city
+FROM student; 
 
-
-
-
-
+--  
 
 
 
