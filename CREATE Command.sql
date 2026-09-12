@@ -184,6 +184,7 @@ SELECT std_id, name, city
 FROM student; 
 
 --  
+SELECT * FROM Employees;
 
 
 
