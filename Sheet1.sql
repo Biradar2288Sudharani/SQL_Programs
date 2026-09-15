@@ -165,5 +165,56 @@ FROM employees
 GROUP BY dept_id
 HAVING COUNT(*) > 5; 
 
+-- 21. INNER JOIN - Get employee name and department name.
+SELECT e.emp_name, d.dept_name 
+FROM Employees e 
+INNER JOIN department d 
+ON e.dept_id = d.dept_id;
+
+-- 22. LEFT JOIN - Show all employees, even if they don't belong to a department. 
+SELECT e.emp_name, d.dept_name
+FROM employees e
+LEFT JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- 23. Find employees without a department
+SELECT e.emp_name
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id
+WHERE d.dept_id IS NULL;
+
+-- 24. RIGHT JOIN
+SELECT e.emp_name, d.dept_name
+FROM employees e
+RIGHT JOIN department d
+ON e.dept_id = d.dept_id;
+
+ -- 25. Join three tables - Find customer names and their order amounts. 
+SELECT c.customer_name, o.order_id, o.amount
+FROM customers c
+JOIN orders o
+ON c.customer_id = o.customer_id;
+
+SELECT e.emp_name, d.dept_name
+FROM employees e
+JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- 26. Customers who have never placed an order
+SELECT c.customer_name
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL; 
+
+SELECT * FROM Employees;
+SELECT * FROM Department;
+SELECT * FROM Customers;
+SELECT * FROM Orders;
+
+UPDATE Orders SET status = NULL WHERE order_id = 'XYZ101';
+
+
  
 
