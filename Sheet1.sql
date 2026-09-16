@@ -215,6 +215,5 @@ SELECT * FROM Orders;
 
 UPDATE Orders SET status = NULL WHERE order_id = 'XYZ101';
 
-
- 
-
+-- How to fetch duplicate from table
+SELECT * FROM Employees;

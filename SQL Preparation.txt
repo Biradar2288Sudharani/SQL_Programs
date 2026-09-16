@@ -2687,3 +2687,145 @@ That SQL + Django ORM connection is exactly where your preparation becomes Full-
 
 If you master the 60 above + their Django ORM equivalents + the reasoning behind JOIN/GROUP BY/subquery/window-function questions, 
 you'll have a genuinely strong SQL base for junior Python/Django/full-stack interviews.
+
+
+=============================================================================
+1. What is primary key ?
+2. can we put one more than primary key in table ?
+3. Is it possible to drop primary key ?
+4. do you have any command to drop primary key ?
+   ALTER TABLE Table_Name DROP PRIMARY KEY;
+5. what is the foreign key ?
+6. Is it possible to delete data from parent table? is data is existing in child table ?
+   no, we will get an error
+7. anything else if we want to delete data from parent table, that is data existing in child table ?
+   first we can delete child table data, then possible to delete parent table data.
+8. Tell me about joins ?
+9. What is inner join, left outer join, right outer join, full outer join
+10. is it possible to two joins in three table ? - yes
+11. what is view ?
+12. Is it possible, is it table and view is having same row id ? - no
+13. what is materilized view ?
+14. suppose if i drop my main table, is it view will be exist ?
+    matralized view is exist and only view is not exist
+15. table and matralized view having different row ID ? - yes
+16. materlized view taking physical space ? - yes
+17. table and view having same ID ? - yes
+18. is it possible DDL Command in View ? - no
+19. is it possible DML in matralized view ? 
+20. is it possible DDL in matralized view ? - yes
+21. is it possible to drop view ? - yes
+22. what is different between WHERE and HAVING ?
+23. what is difference between DELETE and TRUNCATE ?
+24. how to fine 2nd highest salary ?
+25. can we find maximum salary in group ? like department wise
+     SELECT MAX(salary) department FROM Employee GROUP BY department;
+26. greater than 18000 salary i need ? 
+27. what is sys date ?
+28. what is dual ?
+29. can you tell me the aggrigate function ?
+30. what is command to find total salary ?
+31. What is difference between DBMS and RDBMS ?
+32. What is Primary Key and Foreign Key ?
+33. What are contraints and there types ?
+34. WHat are DDL and DML Commands ?
+35. Difference between DELETE, DROP and TRUNCATE ?
+36. WHat is a table and a field in SQL and MySQL ?
+37. Explain NULL in SQL ?
+38. WHat is the default constraint ?
+39. WHat is difference between Unique and Primary Key ?
+40. what are the main SQL command categories ?
+41. Difference between GROUP BY and ORDER BY clauses ?
+42. Difference between WHERE and HAVING clauses ?
+43. WHat is indexing and clustered indexing "
+44. What is normalization ? types of normal forms ?
+45. Difference between UNION and UNION ALL ?
+46. How to convert text to date format ? 
+47. What are triggers ?
+48. What is a stored procedure ?
+49. Explain subquery and correlated subquery ?
+50. What are window functions ? Give examples ?
+51. What are ACIT Properties ?
+52. What is Transaction ? Explain COMMIT and ROLLBACK ?
+53. Difference between INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN ?
+54. What is SQL Injection ? How to prevent ?
+55. How to optimize slow SQL Queries ?
+56. Difference between CHAR and VARCHAR /
+57. What are CTEs ?
+58. What is MYSQL ?
+59. Difference between SQL and MySQL ?
+60. What is the purpose of the my.cnf (or my.ini on windows) configuration file in MySQL ?
+61. What is default port for MySQL Server ?
+62. How to see all the existing databases ?
+    SHOW DATABASES;
+63. How to select a database to work with ?
+    USE db_name;
+64. How to see all the tables present in a database ?
+    SHOW Tables;
+65. How can you see the structure or details of a MySQL table ?
+    DESC db_name;
+66. How do you create a new table named employees with an emp_id as the primary key ?
+67. What are datatype ?
+68. What data type would you use for a column that stores product prices ?
+69. how to find total number of records ?
+70. How to see only top 3 records ?
+71. how can we format the date and time like 21st Tue at 21:20:28 ? - Using date format function
+72. What is CASE in MySQL ?
+73. What is the use of CHECK constraints ?
+74. What are types of relationship in SQL ?
+75. What are stored Routine ?
+76. How can you back up a MySQL database ?
+77. How to import the data in MySQL from a text file ?
+78. WHat is a JOIN MySQL ?
+79. What is an index in mysql ?
+80. How do you add an index to a table ?
+81. How do you select only unique values from a table ?
+82. How do you sort the column data in a table ?
+83. How do you update the email address of a customer in the customers table with a customer id of 5 ?
+84. What is normalization ?
+85. What is stored procedure ?
+86. Explain GROUP BY clause ?
+87. What is subquery ?
+88. What are user defined functions ?
+89. What is a deadlock ?
+90. What are HEAP Tables ?
+91. What is the significance of TIMESTAMP data type ?
+92. Explain the CONTACE Function ?
+93. Write a SQL Query to DELETE a record from the Orders table where the order_id id 01001 ?
+94. Write a SQL Command to add a new column 'birthdate' to an existing table 'employee' ?
+95. How can you remove the table temporary_data from the database ?
+96. How do  you rename a table in MySQL ?
+97. What is the use of ROLL UP in MySQL ?
+98. What are constarints and there types ?
+99. Explain different types of SQL commands ?
+100. What are types of JOINS ?
+101. What are Nested subquery and correlated subquery ?
+102. How to check Pattern matching in SQL ?
+103. Difference between SQL and NOSQL ?
+104. Types of Normalization ?
+105. What is composite key in SQL ?
+106. What is DISCTINCT in SQL ?
+107. What is SET Operator in SQL ? and there types ?
+108. what is minus operator in SQL ?
+109. Types of views in SQL ?
+110. What is differenace between replace and translate in SQL?
+111. What is NVL function in SQL ?
+112. How to fetch nth number maximum salary ?
+113. How to fetch duplicate IDs from table ?
+114.
+115.
+116.
+117.
+118.
+119.
+120.
+121.
+122.
+123.
+124.
+125.
+126.
+127.
+128.
+129.
+130
