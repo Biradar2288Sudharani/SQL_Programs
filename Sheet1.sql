@@ -208,6 +208,332 @@ LEFT JOIN orders o
 ON c.customer_id = o.customer_id
 WHERE o.order_id IS NULL; 
 
+-- 27. Find employees earning more than average salary
+SELECT *
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+-- 28. Find employee with highest salary
+SELECT *
+FROM employees
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+-- 29. Find second-highest salary
+SELECT MAX(salary) AS second_highest
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+-- 30. Find employees earning more than their department average
+SELECT e.*
+FROM employees e
+WHERE e.salary > (
+    SELECT AVG(e2.salary)
+    FROM employees e2
+    WHERE e2.dept_id = e.dept_id
+);
+
+-- 31. Find employees who work in the IT department
+SELECT *
+FROM employees
+WHERE dept_id = (
+    SELECT dept_id
+    FROM departments
+    WHERE dept_name = 'IT'
+);
+
+-- 32. Find unique cities
+SELECT DISTINCT city
+FROM customers;
+
+-- 33. Find duplicate emails
+SELECT email, COUNT(*) AS count
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+-- 34. Find duplicate employee names
+SELECT emp_name, COUNT(*)
+FROM employees
+GROUP BY emp_name
+HAVING COUNT(*) > 1;
+
+-- 35. Categorize salaries
+SELECT emp_name,
+       salary,
+       CASE
+           WHEN salary >= 100000 THEN 'High'
+           WHEN salary >= 50000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_category
+FROM employees;
+
+-- 36. Count high/low salary employees
+SELECT
+    SUM(CASE WHEN salary >= 50000 THEN 1 ELSE 0 END)
+        AS high_salary_count
+FROM employees;
+
+-- 37. Employees hired after January 1, 2025
+SELECT *
+FROM employees
+WHERE hire_date > '2025-01-01';
+
+-- 38. Employees hired in 2025
+SELECT *
+FROM employees
+WHERE YEAR(hire_date) = 2025;
+
+-- 39. Find employees hired in the last 30 days
+SELECT *
+FROM employees
+WHERE hire_date >= CURRENT_DATE - INTERVAL 30 DAY;
+
+-- 40. Orders placed today
+SELECT *
+FROM orders
+WHERE DATE(order_date) = CURRENT_DATE;
+
+-- 41. Monthly sales
+SELECT
+    YEAR(order_date) AS year,
+    MONTH(order_date) AS month,
+    SUM(amount) AS total_sales
+FROM orders
+GROUP BY YEAR(order_date), MONTH(order_date);
+
+-- 42. Update employee salary
+UPDATE employees
+SET salary = 60000
+WHERE emp_id = 101;
+
+UPDATE employees
+SET salary = 60000;
+
+-- 43. Increase salary by 10%
+UPDATE employees
+SET salary = salary * 1.10
+WHERE dept_id = 2;
+
+-- 44. Delete an employee
+DELETE FROM employees
+WHERE emp_id = 101;
+
+-- 45. Delete duplicate records
+DELETE e1
+FROM employees e1
+JOIN employees e2
+ON e1.email = e2.email
+AND e1.emp_id > e2.emp_id;
+
+-- 46. Rank employees by salary
+SELECT
+    emp_name,
+    salary,
+    RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+-- 47. ROW_NUMBER()
+SELECT
+    emp_name,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+FROM employees;
+
+-- 48. DENSE_RANK()
+SELECT
+    emp_name,
+    salary,
+    DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+-- 49. Highest-paid employee in each department
+SELECT *
+FROM (
+    SELECT
+        e.*,
+        ROW_NUMBER() OVER (
+            PARTITION BY dept_id
+            ORDER BY salary DESC
+        ) AS rn
+    FROM employees e
+) x
+WHERE rn = 1;
+
+-- 50. Top 3 salaries in each department
+SELECT *
+FROM (
+    SELECT
+        e.*,
+        DENSE_RANK() OVER (
+            PARTITION BY dept_id
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees e
+) x
+WHERE salary_rank <= 3;
+
+-- 51. Basic CTE
+WITH high_salary AS (
+    SELECT *
+    FROM employees
+    WHERE salary > 80000
+)
+SELECT *
+FROM high_salary;
+
+-- 52. CTE for average salary
+WITH avg_salary AS (
+    SELECT AVG(salary) AS avg_sal
+    FROM employees
+)
+SELECT e.*
+FROM employees e
+CROSS JOIN avg_salary a
+WHERE e.salary > a.avg_sal;
+
+-- 53. Combine two result sets
+SELECT emp_name AS name
+FROM employees
+UNION
+SELECT customer_name AS name
+FROM customers;
+
+-- 54. UNION ALL
+SELECT emp_name AS name
+FROM employees
+UNION ALL
+SELECT customer_name AS name
+FROM customers;
+
+-- 55. Replace NULL email with a default value
+SELECT
+    emp_name,
+    COALESCE(email, 'Not Provided') AS email
+FROM employees;
+
+-- 56. Find employees with missing email
+SELECT *
+FROM employees
+WHERE email IS NULL;
+
+-- 57. Create table with constraints
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE,
+    salary DECIMAL(10,2) CHECK (salary > 0),
+    dept_id INT,
+    FOREIGN KEY (dept_id)
+        REFERENCES departments(dept_id)
+);
+
+-- 58. Transaction example
+START TRANSACTION;
+UPDATE accounts
+SET balance = balance - 5000
+WHERE account_id = 1;
+UPDATE accounts
+SET balance = balance + 5000
+WHERE account_id = 2;
+COMMIT;
+
+-- 59. Rollback
+START TRANSACTION;
+UPDATE employees
+SET salary = salary * 2;
+ROLLBACK;
+
+-- 60. Commit
+START TRANSACTION;
+UPDATE employees
+SET salary = salary * 1.10;
+COMMIT;
+
+-- ***  Second-highest salary
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+-- *** Third-highest salary
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;
+
+-- ***  Employees earning above average
+SELECT *
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+-- ***  Duplicate records
+SELECT email, COUNT(*)
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+-- ***  Employees without department
+SELECT e.*
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id
+WHERE d.dept_id IS NULL;
+
+-- ***  Highest salary per department
+SELECT *
+FROM (
+    SELECT e.*,
+           ROW_NUMBER() OVER (
+               PARTITION BY dept_id
+               ORDER BY salary DESC
+           ) rn
+    FROM employees e
+) x
+WHERE rn = 1;
+
+-- ***  Department-wise employee count
+SELECT dept_id, COUNT(*) AS total
+FROM employees
+GROUP BY dept_id;
+
+-- ***  Department average salary
+SELECT dept_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept_id;
+
+-- ***  Customers without orders
+SELECT c.*
+FROM customers c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+
+-- ***  Top 3 salaries in every department
+SELECT *
+FROM (
+    SELECT e.*,
+           DENSE_RANK() OVER (
+               PARTITION BY dept_id
+               ORDER BY salary DESC
+           ) AS rnk
+    FROM employees e
+) x
+WHERE rnk <= 3;
+
 SELECT * FROM Employees;
 SELECT * FROM Department;
 SELECT * FROM Customers;
@@ -215,5 +541,3 @@ SELECT * FROM Orders;
 
 UPDATE Orders SET status = NULL WHERE order_id = 'XYZ101';
 
--- How to fetch duplicate from table
-SELECT * FROM Employees;
