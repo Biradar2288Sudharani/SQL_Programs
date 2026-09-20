@@ -540,4 +540,4 @@ SELECT * FROM Customers;
 SELECT * FROM Orders;
 
 UPDATE Orders SET status = NULL WHERE order_id = 'XYZ101';
-
+SELECT * FROM Employee ;
