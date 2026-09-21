@@ -2340,8 +2340,8 @@ CTE (WITH)	Temporary named result set
 168. What are the different authentication modes in SQL server ? How can it be changed ?
 169. What is STUFF and REPLACE functions ?
 170. 
-171.
-172.
+171. 
+172. 
 173.
 174.
 175.
