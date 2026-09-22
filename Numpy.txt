@@ -1,0 +1,50 @@
+1. What is Numpy ? Why do we use it ?
+2. What are advantages and disadvantages of Numpy ?
+3. What are ndarrays in Numpy ?
+4. What is difference between Shallow Copy and Deep COpy in Numpy ?
+5. In a Numpy array, how can we access the elements ?
+6. What is var function in Numpy ?
+7. How can you create arrays in Numpy that are 1D, 2D and 3D ?
+8. Which common datatypes does Numpy support ?
+9. How can the local maxima or peaks in a 1-D Numpy array be found ?
+10. How Numpy is different from Pandas ?
+11. What is difference between copy and view ?
+12. What is the difference between slicing and indexing in Numpy ?
+13. What is vectorization in Numpy ?
+14. What is array slicing and how do you it in Numpy ?  
+15. What is a masked array in Numpy ?
+16. How is fliplr different from flipud methods in Numpy ?
+17. Create a program that adds apaces to each character in every Numpy array entry ?
+18. Find the eigenvalues and eigenvectors of a matrix using Numpy ?
+19. Write a program to reshape a 1D Numpy arrary into a 2D array with a given number of rows ?
+20. 
+21.
+22.
+23.
+24.
+25.
+26.
+27.
+28.
+29.
+30.
+31.
+32.
+33.
+34.
+35.
+36.
+37.
+38.
+39.
+40.
+41.
+42.
+43.
+44.
+45.
+46.
+47.
+48.
+49.
+50.

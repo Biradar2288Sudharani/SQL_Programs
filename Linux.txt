@@ -1,0 +1,115 @@
+1. What is use of echo command ?
+2. How to check the computer name or hostname in linux ?
+   Using 'hostname' command
+3. How to check the current user in linux terminal ?
+   whoami
+4. How to check your current path/directory you are workig in ?
+   pwd
+5. Difference between relative and absolute path ?
+   Relative path : Start from current working directory
+   Absolute path : The full path to a file or directory
+6. Which command to be used to create a file in linux ?
+   touch
+   vi
+   vim
+   nano...
+7. How will you edit an existing file on a linux server ?
+   Using vi, vim, nano etc
+8. How to rename a file in linux ?
+   Using 'mv' command
+9. How to search for a string in a file ?
+   Using 'grep' command 
+10. Difference between grep and egrep ?
+    In egrep, you can search for more that one strings at same time
+    egrep "key1|key2|key4"
+11. How can you read a file without using cat command ?
+    Using less, more, vi commad
+12. What is the advantages of using less commands ?
+13. How to check a files permission ?
+14. How to check the IP of your linux server ?
+15. How to read the top 5 lines in a file ?
+16. How to read the last 5 lines in a file ?
+17. How to list the hidden files ?
+18. How to see all the recently used commands ?
+19. What is root ?
+20. What is inode and how to find it for a file ?
+21. Which command can you use for finding files on a linux system ?
+22. Command for counting words and lines ?
+23. How can you combine two commands ? or what is pipe used for ?
+24. How to view the difference between two files ?
+25. What is the use of the shred command do ? (permnently delete a file which is unable to recover)
+26. How to check system architecture info ?
+27. How to combine two files ?
+28. How can you find the type of file ?
+29. How to sort the content of a file ?
+30. Different ways to access a linux server remotely (from a windows machin) ?
+31. What are different types of permissions for a file in linux ?
+32. Which permission allow a user to run an executable file (script) ?
+33. How to write the output of a command into a file ?
+34. How to write something in a file without deleting the existing content ?
+35. How to redirect an error of a command into a file ?
+36. How to automate any task or script ?
+37. How to check scheduled jobs ?
+38. What is the meaning of this cron job ? *****
+39. If your cron job didn't work, how would you check ?
+40. What is daemon service ?
+41. How to check if a service is running or not ?
+42. How to start or stop any service ?
+43. How to check for free disk space ?
+44. How to check CPU usage for a process ?
+45. What is a process in Linux ?
+46. How to check if a process / application is running or not ?
+47. How to terminate / stop a running process ?
+48. Difference between kill and kill -9 ?
+49. How to check if a IP/Server is accessible or not ?
+50. Which comand to use to get info about ports ?
+51. How to check open port on linux system ?
+52. How to check network interfaces in linux ?
+53. Differene between Talnet and SSH ? 
+54. Which service should be running on server to allow you to connect remotely ?
+55. What is SSH ?
+56. Why it is called as Secure Shell ?
+57. What id default port for SSH ?
+58. Which command is used to access a linx system from a terminal or anpther linux server ?
+59. What is Linux and how is it different from Unix ?
+60. How do you find files in Linux ?
+61. What is difference between soft link and hard link ?
+62. What are different types of permissions available for files in Linux ?
+63. How do you create and manage symbolic links ?
+64. How do you combine two commands and what is the use of a pipe (|) in Linux ?
+65. How can you check for free disk space ?
+66. Write a command to find files with the .txt extension containing a specific string ?
+67. What are the different ways to view the content of a file without using the cat command ?
+68. How do you check the current IP address of your Linux server ?
+69. What is a package manager in Linux, and why is it useful ? 
+70. 
+71.
+72.
+73.
+74.
+75.
+76.
+77.
+78.
+79.
+80.
+81.
+82.
+83.
+84.
+85.
+86.
+87.
+88.
+89.
+90.
+91.
+92.
+93.
+94.
+95.
+96.
+97.
+98.
+99.
+100.
