@@ -542,11 +542,3 @@ SELECT * FROM Orders;
 UPDATE Orders SET status = NULL WHERE order_id = 'XYZ101';
 SELECT * FROM Employee ;
 
-
--- 17. Write a query to find each user's previous login date.(Window Functions)
-SELECT user_id, login_date,
-LAG(login_date) OVER (
-PARTITION BY user_id
-ORDER BY login_date
-) AS previous_login
-FROM User_logins;
