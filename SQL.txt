@@ -28,70 +28,55 @@ Q4. What is the difference between a row and a record?
 In SQL, they are generally the same. A record refers to the complete information about one entity, and it is stored as a row in the table.
 
 Q1. Can a table have two Primary Keys?
-Answer:
 No. A table can have only one Primary Key, although that Primary Key may consist of multiple columns (a composite primary key).
 
 Q2. Can a table have multiple Foreign Keys?
-Answer:
 Yes. A table can have multiple Foreign Keys referencing different tables or even the same table.
 
 Q3. Difference between Primary Key and Unique Key?
-Answer:
 Primary Key cannot contain NULL values and uniquely identifies each row.
 Unique Key also prevents duplicate values, but in MySQL it generally allows one NULL value.
 
 Q4. Why is a Foreign Key used?
-Answer:
 To create relationships between tables and maintain referential integrity, ensuring that related data remains consistent.
 
 Q5. Difference between Candidate Key and Super Key?
-Answer:
 A Super Key is any combination of columns that uniquely identifies a row.
 A Candidate Key is the smallest possible Super Key with no unnecessary columns.
 
 🎯 MNC Technical HR Questions
 Q1. What is a Constraint?
-Answer:
 A constraint is a rule applied to a column to ensure data accuracy and integrity.
 
 Q2. Why do we use NOT NULL?
-Answer:
 To ensure that mandatory fields always contain a value.
 
 Q3. Why use CHECK?
-Answer:
 To restrict invalid data, such as ensuring age is at least 18 or salary is greater than zero.
 
 Q4. Difference between CHAR and VARCHAR?
-Answer:
 CHAR stores fixed-length strings and pads unused spaces.
 VARCHAR stores variable-length strings and uses storage efficiently.
 
 Q5. Why use DECIMAL instead of FLOAT for salary?
-Answer:
 Because DECIMAL stores exact values without floating-point rounding errors, making it suitable for financial data.
 
 Q1. Difference between DELETE and TRUNCATE?
-Answer:
 DELETE removes selected rows (or all rows if no WHERE clause is used) and supports the WHERE clause.
 TRUNCATE removes all rows quickly, does not support WHERE, and keeps the table structure.
 
 Q2. Difference between DROP and TRUNCATE?
-Answer:
 TRUNCATE removes only the data and keeps the table.
 DROP removes both the table structure and all its data permanently.
 
 Q3. Difference between CREATE and ALTER?
-Answer:
 CREATE creates a new database object.
 ALTER modifies the structure of an existing database object.
 
 Q4. Why is WHERE important in UPDATE and DELETE?
-Answer:
 Without a WHERE clause, UPDATE or DELETE affects every row in the table, which can lead to accidental data loss or incorrect updates.
 
 Q5. Which SQL command is used most frequently in real projects?
-Answer:
 SELECT is the most frequently used command because applications constantly retrieve data to display users, products, orders, reports, and other information.
 
 Q1 - Why do we use WHERE?
@@ -489,8 +474,7 @@ Q1 What is Normalization?
 Normalization is the process of organizing database tables to reduce redundancy and improve data integrity by dividing data into related tables.
 
 Q2 Why do we normalize databases?
-Answer 
-	Reduce duplicate data
+Answer - Reduce duplicate data
 	Prevent anomalies
 	Improve consistency
 	Simplify maintenance
@@ -533,6 +517,65 @@ View	                        CTE
 Stored permanently in database	Exists only during one query
 Reusable across queries	        Temporary
 Created using CREATE VIEW	Created using WITH
+
+1. A new intern should only be able to view the employee table but should not modify it. which SQL command will you use ?
+Use GRANT to give specific access.
+SELECT permission allows reading data from employees.
+Do not grant INSERT, UPDATE or DELETE permissions.
+
+2. An alias created in the SELECT list cannot be referenced in the WHERE clause of the same query. how does SQL's logical execution order explain this ?
+WHERE is evaluated before SELECT.
+The alias does not exist yet when WHERE runs.
+Use the expressions again, a subquerry or a CTE.
+
+3. A ranking query contains duplicate salaries. how will ROW_NUMBER, RANK() and DENSE_RANK() assign values differently ?
+Simple ranking output 
+Employee     Salary     ROW_NUMBER    RANK    DENSE_RANK
+Aman         90000         1           1         1
+Neha         80000         2           2         2
+Ravi         80000         3           2         2
+Simran       70000         4           4         3
+
+ROW_NUMBER gives a unique sequence even when salaries tie.
+RANK gives same rank to ties but leaves gaps.
+DENSE_RANK gives same rank to ties without gaps.
+
+4. A table contains duplicate and null email values. how will COUNT(*), COUNT(email) and COUNT(DISTINCT email) differ ?
+COUNT(*) counts every row.
+COUNT(email) counts only rows where email is not NULL.
+COUNT(DISTINCT email) counts unique non-null emails only.
+
+5. A report contains missing values across primary_phone, alternate_phone and emergency_phone.  How would you return the first available value and show not available when all three are NULL ?
+COALESCE returns the first non null values.
+useful when multiple optional columns can contain the required value.
+The first text value works as a fallback when all columns are NULL.
+
+6. Find query to find each user's previous login date.
+user logins
+user_id      login_data      session_minutes
+1            2024-07-01            35        
+1            2024-07-02            42 
+1            2024-07-03            28 
+2            2024-07-01            20 
+2            2024-07-02            25 
+3            2024-07-03            45 
+
+7. A salary report must classify employee into low, medium and high, salary bands inside the SELECT output. which conditional expression would you use, and why is it preperable to 1F here ?
+Use CASE because it works inside SELECT, ORDER BY and aggegate expressions.
+IF is database specific and usually controls procedural flow.
+CASE is more portable for row wise conditional output.
+
+8.  A percentage calculation divides achived_sales by target_sales but some targets are zero. how would you prevent a divide by zero error while preserving those rows ?
+NULLIF(target_sales, 0) turns zero into null.
+Dividing by null returns null instead of crashing the query.
+Rows are preserved, so missing or invalid percentage can be handled later.
+
+9.  Write a query to delete duplicate records while keeping the newest records for each email.alter
+customer_id         Customer_name           email                 created_at
+301                 Nikhil Jain          nikhil@gmail.com      2024-01-12 10:15
+302                   Sara Ali            sara@gmail.com       2024-02-03 09:10
+303                 Nikhil Jain          nikhil@gmail.com      2024-05-21 18:30
+304                   Dev Patel             dev@gmail.com      2024-06-11 12:45
 
 If an interviewer asks:
 "Which JOIN is the most dangerous on large tables?"
@@ -600,6 +643,7 @@ B	2
 C	2
 D	4
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 🏆 SQL Practice Set (Day 1 + Day 2)
 Employee Table
 Emp_ID	Name	Department	Salary	Age	City	Joining_Date	Manager
@@ -611,71 +655,6 @@ Emp_ID	Name	Department	Salary	Age	City	Joining_Date	Manager
 106	Karan	Python	80000	30	Pune	2021-06-05	Rahul
 107	Sneha	Testing	42000	23	Hyderabad	2024-07-30	Ankit
 108	Arjun	Java	90000	31	Bangalore	2020-09-25	NULL
-🟢 PART A — SELECT Practice
-Q1 Display all employee details.
- 
-Q2 Display only Name, Salary and Department
-
-Q3 Display only employee names.
-
-Q4 Display all departments.
-
-Q5 Display all cities.
-
-🟢 PART B — WHERE Practice
-Q6 Show employees whose salary is greater than ₹50,000.
-
-Q7 Show employees younger than 25.
-
-Q8 Show employees from Pune.
-
-Q9 Show employees from Mumbai.
-
-Q10 Show employees whose department is Python.
-
-🟢 PART C — AND Practice
-Q11 Show Python developers whose salary is greater than ₹60,000.
-
-Q12 Show employees from Pune whose age is less than 25.
-
-Q13 Show Java developers from Mumbai.
-
-Q14 Show Testing employees older than 22.
-
-Q15 Show employees whose salary is greater than 40,000 and age greater than 24.
-
-🟢 PART D — OR Practice
-Q16 Show employees from Pune OR Mumbai.
-
-Q17 Show employees in Python OR Java department.
-
-Q18 Show employees whose salary is greater than ₹80,000 OR whose age is below 23.
-
-Q19 Show employees from Bangalore OR Hyderabad.
-
-Q20 Show employees managed by Rahul OR Ankit.
-
-🟢 PART E — NOT Practice
-Q21 Show employees NOT from Pune.
-
-Q22 Show employees NOT in HR department.
-
-Q23 Show employees whose salary is NOT greater than ₹50,000.
-
-Q24 Show employees NOT managed by Rahul.
-
-Q25 Show employees NOT from Mumbai.
-
-🟢 PART F — BETWEEN Practice
-Q26 Show employees whose salary is between ₹40,000 and ₹70,000.
-
-Q27 Show employees whose age is between 23 and 30.
-
-Q28 Show employees who joined between 2023-01-01 and 2024-12-31.
-
-Q29 Show employees whose Emp_ID is between 103 and 107.
-
-Q30 Show salaries between ₹45,000 and ₹90,000.
 
 🟢 PART G — IN Practice
 Q31 Show employees from Pune Mumbai Delhi
@@ -775,25 +754,15 @@ Q74 Maximum salary city-wise.
 Q75 Average salary manager-wise.
 
 🟢 PART N — HAVING
-Q76
+Q76 Show departments having more than 2 employees.
 
-Show departments having more than 2 employees.
+Q77 Show departments whose average salary is greater than ₹60,000.
 
-Q77
+Q78 Show cities having more than one employee.
 
-Show departments whose average salary is greater than ₹60,000.
+Q79 Show managers managing more than two employees.
 
-Q78
-
-Show cities having more than one employee.
-
-Q79
-
-Show managers managing more than two employees.
-
-Q80
-
-Show departments whose maximum salary is above ₹75,000.
+Q80 Show departments whose maximum salary is above ₹75,000.
 
 🟢 PART O — CASE
 Q81 Show salary status: High, Medium, Low
@@ -819,7 +788,6 @@ Q89 Count employees whose manager is NULL.
 
 Q90 Display manager name using COALESCE.
 
-🔥 MNC Interview Challenge (Very Important)
 Q91 Find the second highest salary.
 
 Q92 Find employees earning more than the average salary.
@@ -841,18 +809,8 @@ Q99 Display the top 2 youngest Python developers.
 Q100 Write a query to display: Department, Number of Employees, Highest Salary, Lowest Salary, Average Salary, Total Salary
      But display only departments having at least 2 employees, and sort the result by highest average salary
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-01. SELECT / WHERE / ORDER BY
-02. Aggregate Functions
-03. GROUP BY / HAVING
-04. JOINs
-05. Subqueries
-06. CASE / NULL handling
-07. CTEs
-08. Window Functions
-09. INSERT / UPDATE / DELETE
-10. Transactions / Constraints
-=============================================================================
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 1. What is primary key ?
 2. can we put one more than primary key in table ?
 3. Is it possible to drop primary key ?

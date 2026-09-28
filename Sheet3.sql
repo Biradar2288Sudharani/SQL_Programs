@@ -188,7 +188,7 @@ SUM(CASE WHEN City = 'Delhi' THEN Salary END) AS "Delhi"
 FROM Emp
 GROUP BY Emp_ID, Emp_Name;
 
--- 18.
+-- 18. 
 -- 19.
 -- 20.
 -- 21.

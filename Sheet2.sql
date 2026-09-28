@@ -139,9 +139,23 @@ ORDER BY login_date
 ) AS previous_login
 FROM User_logins;
 
--- 18.  
--- 19.
--- 20.
+-- 18. A salary report must classify employee into low, medium and high, salary bands inside the SELECT output. which conditional expression would you use, and why is it preperable to 1F here ?
+SELECT emp_name, salary,
+CASE WHEN salary >= 80000 THEN 'High'
+     WHEN salary >=50000 THEN 'Medium'
+     ELSE 'Low'
+END AS salary_band
+FROM TCS_Employee;
+
+SELECT * FROM TCS_Employee;
+
+-- 19. A percentage calculation divides achived_sales by target_sales but some targets are zero. how would you prevent a divide by zero error while preserving those rows ?
+SELECT emp_id, 
+achived_salas * 100.0 / NULLIF(target_sales, 0) AS achivement_pot
+FROM sales_targets;
+
+-- 20. Write a query to delete duplicate records while keeping the newest records for each email.
+
 -- 21.
 -- 22.
 -- 23.
