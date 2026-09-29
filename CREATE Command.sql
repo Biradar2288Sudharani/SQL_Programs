@@ -183,7 +183,6 @@ CREATE VIEW student_details AS
 SELECT std_id, name, city
 FROM student; 
 
---  SELECT * FROM Employee;
 
 
 
