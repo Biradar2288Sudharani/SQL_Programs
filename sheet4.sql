@@ -348,6 +348,44 @@ SELECT COUNT(*) FROM IBM  WHERE Manager IS NULL;
 -- Q90 Display manager name using COALESCE.
 SELECT Name, COALESCE(Manager, 'No Manager') AS ManagerName FROM IBM;
 
+--  Q91 Find the second highest salary.
+SELECT MAX(Salary) AS SecondHighestSalary FROM IBM WHERE Salary < (SELECT MAX(Salary) FROM IBM);
+
+-- Q92 Find employees earning more than the average salary.
+SELECT * FROM IBM WHERE Salary > (SELECT AVG(Salary) FROM IBM);
+
+-- Q93 Find departments having the highest average salary.
+SELECT Department, AVG(Salary) AS AvgSalary FROM IBM GROUP BY Department ORDER BY AvgSalary DESC LIMIT 1;
+
+-- Q94 Find cities where more than two employees work.
+SELECT City, COUNT(*) AS EmployeeCount FROM IBM GROUP BY City HAVING COUNT(*) > 2;
+
+-- Q95 Find the total salary of employees from Pune.
+SELECT SUM(Salary) AS TotalSalaryPune FROM IBM WHERE City = 'Pune';
+
+-- Q96 Find the average salary of employees whose age is above 25.
+SELECT AVG(Salary) FROM IBM WHERE Age > 25;
+
+-- Q97 Find departments where the minimum salary is greater than ₹45,000.
+SELECT Department, MIN(Salary) AS MinSalary FROM IBM GROUP BY Department HAVING MIN(Salary) > 45000;
+
+-- Q98 Show employees who joined after 2023 and whose salary is above ₹50,000.
+SELECT * FROM IBM WHERE YEAR(Joining_Date) > '2023 - 01 - 01' AND Salary > 50000;
+
+-- Q99 Display the top 2 youngest Python developers.
+SELECT * FROM IBM WHERE Department = 'Python' OR Department LIKE 'Python' ORDER BY Age ASC LIMIT 2;
+
+-- Q100 Write a query to display: Department, Number of Employees, Highest Salary, Lowest Salary, Average Salary, Total Salary But display only departments having at least 2 employees, and sort the result by highest average salary
+SELECT Department, 
+COUNT(*) AS NumberOfEmployees,
+MAX(Salary) AS HighestSalary,
+MIN(Salary) AS LowestSalary,
+AVG(Salary) AS AverageSalary,
+SUM(Salary) AS Total_Salary
+FROM IBM 
+GROUP BY Department 
+HAVING COUNT(*) >= 2
+ORDER BY AverageSalary DESC;
 
 
 

@@ -642,41 +642,6 @@ A	1
 B	2
 C	2
 D	4
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-🏆 SQL Practice Set (Day 1 + Day 2)
-Employee Table
-Emp_ID	Name	Department	Salary	Age	City	Joining_Date	Manager
-101	Sudha	Python	50000	22	Pune	2024-01-10	Rahul
-102	Ravi	Java	65000	25	Mumbai	2023-03-18	NULL
-103	Priya	Testing	45000	24	Pune	2024-05-12	Ankit
-104	Amit	Python	70000	28	Delhi	2022-11-15	Rahul
-105	Neha	HR	40000	26	Mumbai	2025-02-20	NULL
-106	Karan	Python	80000	30	Pune	2021-06-05	Rahul
-107	Sneha	Testing	42000	23	Hyderabad	2024-07-30	Ankit
-108	Arjun	Java	90000	31	Bangalore	2020-09-25	NULL
-
-Q91 Find the second highest salary.
-
-Q92 Find employees earning more than the average salary.
-
-Q93 Find departments having the highest average salary.
-
-Q94 Find cities where more than two employees work.
-
-Q95 Find the total salary of employees from Pune.
-
-Q96 Find the average salary of employees whose age is above 25.
-
-Q97 Find departments where the minimum salary is greater than ₹45,000.
-
-Q98 Show employees who joined after 2023 and whose salary is above ₹50,000.
-
-Q99 Display the top 2 youngest Python developers.
-
-Q100 Write a query to display: Department, Number of Employees, Highest Salary, Lowest Salary, Average Salary, Total Salary
-     But display only departments having at least 2 employees, and sort the result by highest average salary
-
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 1. What is primary key ?
