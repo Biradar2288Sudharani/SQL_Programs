@@ -581,67 +581,1467 @@ If an interviewer asks:
 "Which JOIN is the most dangerous on large tables?"
 "CROSS JOIN can be the most expensive because it returns the Cartesian Product. 
 If the tables are large, the result can contain millions of rows, so it should only be used when every possible combination is actually required."
-**********************
-🏆 MNC Challenge
-Suppose you have:
-1 - Customers
-ID	Name
-1	Sudha
-2	Ravi
-3	Priya
-Orders
-Order_ID	Customer_ID
-101	1
-102	1
-103	2
-Question - Write a query to display: Customer Name, Number of Orders, Even customers who haven't placed any orders.
-           Hint: You'll need a LEFT JOIN with GROUP BY and COUNT().
-************************************
-2 - Employees
-ID	Name	Project_ID
-1	Sudha	101
-2	Ravi	102
-Projects
-Project_ID	Project
-101	Smart Prep
-102	Hospital AI
-103	E-Commerce
-Question - Display, Project Name, Employee Name, Even projects without employees.
-           Hint: RIGHT JOIN (or swap the tables and use LEFT JOIN).
-****************************************
-3 - Employee Table
-Emp_ID	Name	Manager_ID
-1	CEO	NULL
-2	CTO	1
-3	HR Head	1
-4	Python Lead	2
-5	Developer	4
-Question: Write a query to display:
-Employee	Manager
-CTO	        CEO
-HR Head	        CEO
-Python Lead	CTO
-Developer	Python Lead
 
-****************************************
-4 - Employee Table
-Name	Salary
-A	100
-B	90
-C	90
-D	80
-What is the output?
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                          NOW IT'S TIME TO LEARNING JOIN
+
+
+Table 1 — Employees
+CREATE TABLE Employees (
+    Emp_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Dept_ID INT,
+    Manager_ID INT,
+    Salary INT,
+    City VARCHAR(50)
+);
+Data
+Emp_ID	Name	Dept_ID	Manager_ID	Salary	City
+101	Sudha	1	201	50000	Pune
+102	Ravi	2	NULL	65000	Mumbai
+103	Shankar	3	202	45000	Pune
+104	Sachin	1	201	74000	Delhi
+105	Neha	4	NULL	40000	Mumbai
+106	Karan	1	201	80000	Pune
+107	Sneha	3	202	42000	Hyderabad
+108	Arjun	2	NULL	90000	Bangalore
+
+Table 2 — Departments
+CREATE TABLE Departments (
+    Dept_ID INT PRIMARY KEY,
+    Department_Name VARCHAR(50),
+    Location VARCHAR(50)
+);
+Dept_ID	Department_Name	Location
+1	Python	Pune
+2	Java	Mumbai
+3	Testing	Hyderabad
+4	HR	Delhi
+5	DevOps	Bangalore
+
+Table 3 — Projects
+CREATE TABLE Projects (
+    Project_ID INT PRIMARY KEY,
+    Project_Name VARCHAR(100),
+    Dept_ID INT
+);
+Project_ID	Project_Name	Dept_ID
+501	FastBox	1
+502	Banking App	2
+503	Testing Portal	3
+504	HR Management	4
+505	Cloud Migration	5
+
+Table 4 — Employee_Projects
+CREATE TABLE Employee_Projects (
+    Emp_ID INT,
+    Project_ID INT
+);
+Emp_ID	Project_ID
+101	501
+102	502
+103	503
+104	501
+106	501
+107	503
+108	502
+
+Syntax
+SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;
+
+JOIN and INNER JOIN are normally equivalent:
+
+SELECT *
+FROM Employees
+JOIN Departments
+ON Employees.Dept_ID = Departments.Dept_ID;
+INNER JOIN — Practical Questions
+
+Q1. Display employee name and department name.
 SELECT
-Name,
-RANK() OVER(ORDER BY Salary DESC)
-FROM Employee;
+    e.Name,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+Important
+e → Employees
+d → Departments
 
-Answer
-Name	Rank
-A	1
-B	2
-C	2
-D	4
+These are aliases.
+
+Q2. Display employee name, salary and department.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+Q3. Display employees working in Pune department.
+SELECT
+    e.Name,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Location = 'Pune';
+JOIN happens first conceptually, then filtering is applied.
+
+Q4. Display employees whose department is Python.
+SELECT
+    e.Name,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Department_Name = 'Python';
+
+Q5. Display employees earning more than ₹60,000 with their department.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.Salary > 60000;
+
+Q6. Display employee name, department and department location.
+SELECT
+    e.Name,
+    d.Department_Name,
+    d.Location
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+Q7. Display Python employees earning more than ₹70,000.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Department_Name = 'Python'
+AND e.Salary > 70000;
+
+Q8. Count employees department-wise.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name;
+
+Q9. Find average salary department-wise.
+SELECT
+    d.Department_Name,
+    AVG(e.Salary) AS Average_Salary
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name;
+
+Q10. Find highest salary in each department.
+SELECT
+    d.Department_Name,
+    MAX(e.Salary) AS Highest_Salary
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name;
+
+PART 5 — INNER JOIN: Multiple Tables
+Now we go one level deeper.
+Q11. Display employee name and project name.
+SELECT
+    e.Name,
+    p.Project_Name
+FROM Employees e
+INNER JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects p
+ON ep.Project_ID = p.Project_ID;
+Flow
+Employees
+    ↓
+Employee_Projects
+    ↓
+Projects
+
+This is called a multiple JOIN.
+
+Q12. Display employee, department and project.
+SELECT
+    e.Name,
+    d.Department_Name,
+    p.Project_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+INNER JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects p
+ON ep.Project_ID = p.Project_ID;
+
+Q13. Display Python employees and their projects.
+SELECT
+    e.Name,
+    d.Department_Name,
+    p.Project_Name
+FROM Employees e
+INNER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+INNER JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects p
+ON ep.Project_ID = p.Project_ID
+WHERE d.Department_Name = 'Python';
+
+Q14. Count employees working on each project.
+SELECT
+    p.Project_Name,
+    COUNT(ep.Emp_ID) AS Employee_Count
+FROM Projects p
+INNER JOIN Employee_Projects ep
+ON p.Project_ID = ep.Project_ID
+GROUP BY p.Project_Name;
+
+Q15. Find projects having more than 2 employees.
+SELECT
+    p.Project_Name,
+    COUNT(ep.Emp_ID) AS Employee_Count
+FROM Projects p
+INNER JOIN Employee_Projects ep
+ON p.Project_ID = ep.Project_ID
+GROUP BY p.Project_Name
+HAVING COUNT(ep.Emp_ID) > 2;
+
+PART 6 — LEFT JOIN
+What is LEFT JOIN?
+
+LEFT JOIN returns:
+
+ALL records from LEFT table
++
+matching records from RIGHT table
+
+If there is no match:
+
+RIGHT table columns = NULL
+Syntax
+SELECT columns
+FROM table1
+LEFT JOIN table2
+ON table1.column = table2.column;
+Memory trick
+LEFT JOIN
+    ↓
+LEFT table = guaranteed
+RIGHT table = optional
+LEFT JOIN — Practical Questions
+
+Q16. Display all employees with their department.
+SELECT
+    e.Name,
+    d.Department_Name
+FROM Employees e
+LEFT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+Because Employees is on the left, every employee appears.
+
+Q17. Display all employees including employees without a project.
+SELECT
+    e.Name,
+    p.Project_Name
+FROM Employees e
+LEFT JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+LEFT JOIN Projects p
+ON ep.Project_ID = p.Project_ID;
+
+Neha will appear with:
+
+Neha | NULL
+
+Q18. Find employees who don't have a project.
+SELECT
+    e.Name
+FROM Employees e
+LEFT JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+WHERE ep.Project_ID IS NULL;
+⭐ Interview pattern
+LEFT JOIN
+WHERE right_table.id IS NULL
+
+means:
+
+Find records in the left table that have no matching record in the right table.
+
+Q19. Find departments that have no employees.
+SELECT
+    d.Department_Name
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+WHERE e.Emp_ID IS NULL;
+
+Result:
+
+DevOps
+
+Q20. Display all departments and employee count, including departments with zero employees.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+Why COUNT(e.Emp_ID)?
+
+Because unmatched employees produce:
+
+NULL
+
+and COUNT(column) doesn't count NULL.
+
+PART 7 — RIGHT JOIN
+What is RIGHT JOIN?
+
+RIGHT JOIN returns:
+
+ALL records from RIGHT table
++
+matching records from LEFT table
+Syntax
+SELECT columns
+FROM table1
+RIGHT JOIN table2
+ON table1.column = table2.column;
+Memory trick
+RIGHT JOIN
+     ↓
+RIGHT table = guaranteed
+LEFT table = optional
+
+Q21. Display all departments and matching employees.
+SELECT
+    d.Department_Name,
+    e.Name
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+Because Departments is on the right, all departments appear.
+
+Q22. Find departments without employees using RIGHT JOIN.
+SELECT
+    d.Department_Name
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.Emp_ID IS NULL;
+
+Q23. Display all departments with employee names and salaries.
+SELECT
+    d.Department_Name,
+    e.Name,
+    e.Salary
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+PART 8 — LEFT JOIN vs RIGHT JOIN
+
+These two are often confusing.
+
+LEFT JOIN
+FROM Employees e
+LEFT JOIN Departments d
+
+means:
+
+Keep ALL Employees
+RIGHT JOIN
+FROM Employees e
+RIGHT JOIN Departments d
+
+means:
+
+Keep ALL Departments
+Easy trick
+
+Don't memorize the word LEFT.
+
+Look at:
+
+FROM A
+LEFT JOIN B
+
+A is guaranteed.
+
+FROM A
+RIGHT JOIN B
+
+B is guaranteed.
+
+PART 9 — FULL OUTER JOIN
+What is FULL OUTER JOIN?
+
+Returns:
+
+Matching records
++
+unmatched records from LEFT
++
+unmatched records from RIGHT
+
+Conceptually:
+
+LEFT only
++
+MATCH
++
+RIGHT only
+Syntax
+
+In databases that support it:
+
+SELECT *
+FROM Employees e
+FULL OUTER JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+Important MySQL interview point
+
+MySQL does not provide a native FULL OUTER JOIN syntax.
+
+A common MySQL approach is:
+
+SELECT *
+FROM Employees e
+LEFT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+
+UNION
+
+SELECT *
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+PART 10 — CROSS JOIN
+What is CROSS JOIN?
+
+CROSS JOIN produces every possible combination of rows.
+
+If:
+
+Employees = 8 rows
+Departments = 5 rows
+
+Then:
+
+8 × 5 = 40 rows
+Syntax
+SELECT *
+FROM Employees
+CROSS JOIN Departments;
+
+There is normally no ON condition.
+
+Q24. Generate every employee-department combination.
+SELECT
+    e.Name,
+    d.Department_Name
+FROM Employees e
+CROSS JOIN Departments d;
+PART 11 — SELF JOIN
+
+This is extremely important for interviews.
+
+What is SELF JOIN?
+
+A table joins with itself.
+
+Useful for:
+
+Employee → Manager
+Employee → Supervisor
+Employee → Mentor
+Category → Parent Category
+
+Our table contains:
+
+Emp_ID
+Manager_ID
+
+So we can use the same Employees table twice.
+
+Q25. Display employee name and manager name.
+SELECT
+    e.Name AS Employee,
+    m.Name AS Manager
+FROM Employees e
+LEFT JOIN Employees m
+ON e.Manager_ID = m.Emp_ID;
+Understand this carefully
+
+We have:
+
+Employees e
+Employees m
+
+Both refer to the same table.
+
+But:
+
+e = employee
+m = manager
+
+Q26. Display employees who have a manager.
+SELECT
+    e.Name AS Employee,
+    m.Name AS Manager
+FROM Employees e
+INNER JOIN Employees m
+ON e.Manager_ID = m.Emp_ID;
+
+Q27. Display employees who don't have a manager.
+SELECT
+    e.Name
+FROM Employees e
+LEFT JOIN Employees m
+ON e.Manager_ID = m.Emp_ID
+WHERE e.Manager_ID IS NULL;
+PART 12 — JOIN + WHERE
+
+Q28. Display Python employees earning above ₹60,000.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Department_Name = 'Python'
+AND e.Salary > 60000;
+
+Q29. Display employees from Pune with their department.
+SELECT
+    e.Name,
+    e.City,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.City = 'Pune';
+PART 13 — JOIN + ORDER BY
+
+Q30. Display employees and departments sorted by salary descending.
+SELECT
+    e.Name,
+    d.Department_Name,
+    e.Salary
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+ORDER BY e.Salary DESC;
+
+Q31. Display departments alphabetically and employees by salary.
+SELECT
+    d.Department_Name,
+    e.Name,
+    e.Salary
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+ORDER BY d.Department_Name ASC,
+         e.Salary DESC;
+PART 14 — JOIN + GROUP BY
+
+Q32. Count employees in each department.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+
+Q33. Find average salary department-wise.
+SELECT
+    d.Department_Name,
+    AVG(e.Salary) AS Average_Salary
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+
+Q34. Find total salary department-wise.
+SELECT
+    d.Department_Name,
+    SUM(e.Salary) AS Total_Salary
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+PART 15 — JOIN + HAVING
+
+Q35. Find departments having more than 2 employees.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name
+HAVING COUNT(e.Emp_ID) > 2;
+
+Q36. Find departments whose average salary is greater than ₹60,000.
+SELECT
+    d.Department_Name,
+    AVG(e.Salary) AS Average_Salary
+FROM Departments d
+JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name
+HAVING AVG(e.Salary) > 60000;
+PART 16 — JOIN + Aggregate Functions
+
+Q37. Find highest-paid employee in each department.
+SELECT
+    d.Department_Name,
+    MAX(e.Salary) AS Highest_Salary
+FROM Departments d
+JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+
+Q38. Find lowest-paid employee in each department.
+SELECT
+    d.Department_Name,
+    MIN(e.Salary) AS Lowest_Salary
+FROM Departments d
+JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+
+Q39. Find total employees and total salary for each department.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Total_Employees,
+    SUM(e.Salary) AS Total_Salary
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name;
+PART 17 — JOIN + Multiple Conditions
+
+Q40. Find Python employees from Pune earning above ₹60,000.
+SELECT
+    e.Name,
+    e.Salary,
+    e.City,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Department_Name = 'Python'
+AND e.City = 'Pune'
+AND e.Salary > 60000;
+PART 18 — JOIN + CASE
+
+Q41. Display employee, department and salary category.
+SELECT
+    e.Name,
+    d.Department_Name,
+    e.Salary,
+    CASE
+        WHEN e.Salary >= 70000 THEN 'High'
+        WHEN e.Salary >= 50000 THEN 'Medium'
+        ELSE 'Low'
+    END AS Salary_Category
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+This connects directly with the CASE practice style in your uploaded sheet.
+
+PART 19 — JOIN + NULL
+Q42. Display all employees and show No Project if they don't have one.
+SELECT
+    e.Name,
+    COALESCE(p.Project_Name, 'No Project') AS Project
+FROM Employees e
+LEFT JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+LEFT JOIN Projects p
+ON ep.Project_ID = p.Project_ID;
+
+This combines your existing COALESCE concept with JOIN.
+
+PART 20 — Find Missing Records
+
+These questions are very important for interviews.
+
+Q43. Find employees who are not assigned to any project.
+SELECT
+    e.Emp_ID,
+    e.Name
+FROM Employees e
+LEFT JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+WHERE ep.Emp_ID IS NULL;
+
+Q44. Find departments without employees.
+SELECT
+    d.Dept_ID,
+    d.Department_Name
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+WHERE e.Emp_ID IS NULL;
+
+Q45. Find projects without employees.
+SELECT
+    p.Project_ID,
+    p.Project_Name
+FROM Projects p
+LEFT JOIN Employee_Projects ep
+ON p.Project_ID = ep.Project_ID
+WHERE ep.Emp_ID IS NULL;
+PART 21 — JOIN Three Tables
+
+Q46. Display employee, department and project.
+SELECT
+    e.Name,
+    d.Department_Name,
+    p.Project_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+JOIN Projects p
+ON ep.Project_ID = p.Project_ID;
+
+Q47. Find all Python employees working on FastBox.
+SELECT
+    e.Name,
+    d.Department_Name,
+    p.Project_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+JOIN Employee_Projects ep
+ON e.Emp_ID = ep.Emp_ID
+JOIN Projects p
+ON ep.Project_ID = p.Project_ID
+WHERE d.Department_Name = 'Python'
+AND p.Project_Name = 'FastBox';
+
+Q48. Count employees working on each project.
+SELECT
+    p.Project_Name,
+    COUNT(ep.Emp_ID) AS Employee_Count
+FROM Projects p
+LEFT JOIN Employee_Projects ep
+ON p.Project_ID = ep.Project_ID
+GROUP BY p.Project_Name;
+
+Q49. Display project name and department name.
+SELECT
+    p.Project_Name,
+    d.Department_Name
+FROM Projects p
+JOIN Departments d
+ON p.Dept_ID = d.Dept_ID;
+
+Q50. Display project, department and department location.
+SELECT
+    p.Project_Name,
+    d.Department_Name,
+    d.Location
+FROM Projects p
+JOIN Departments d
+ON p.Dept_ID = d.Dept_ID;
+PART 22 — Interview-Level JOIN Questions
+
+Now the questions become more challenging.
+
+Q51. Find employees earning more than their department's average salary.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.Salary >
+(
+    SELECT AVG(e2.Salary)
+    FROM Employees e2
+    WHERE e2.Dept_ID = e.Dept_ID
+);
+Concept
+
+This is:
+
+JOIN
++
+Correlated Subquery
+
+Q52. Find the highest-paid employee in every department.
+
+One approach:
+
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.Salary =
+(
+    SELECT MAX(e2.Salary)
+    FROM Employees e2
+    WHERE e2.Dept_ID = e.Dept_ID
+);
+
+Q53. Find departments whose total salary exceeds ₹1,00,000.
+SELECT
+    d.Department_Name,
+    SUM(e.Salary) AS Total_Salary
+FROM Departments d
+JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name
+HAVING SUM(e.Salary) > 100000;
+
+Q54. Find departments having at least 2 employees and average salary above ₹50,000.
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID) AS Employee_Count,
+    AVG(e.Salary) AS Average_Salary
+FROM Departments d
+JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+GROUP BY d.Department_Name
+HAVING COUNT(e.Emp_ID) >= 2
+AND AVG(e.Salary) > 50000;
+
+Q55. Find employees whose salary is higher than their manager's salary.
+
+This is a SELF JOIN question.
+
+SELECT
+    e.Name AS Employee,
+    e.Salary AS Employee_Salary,
+    m.Name AS Manager,
+    m.Salary AS Manager_Salary
+FROM Employees e
+JOIN Employees m
+ON e.Manager_ID = m.Emp_ID
+WHERE e.Salary > m.Salary;
+
+⭐ Very important interview question.
+
+PART 23 — Advanced JOIN Questions
+Q56. Display each employee with manager and department.
+SELECT
+    e.Name AS Employee,
+    m.Name AS Manager,
+    d.Department_Name
+FROM Employees e
+LEFT JOIN Employees m
+ON e.Manager_ID = m.Emp_ID
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID;
+
+Q57. Count how many employees each manager manages.
+SELECT
+    m.Name AS Manager,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Employees m
+JOIN Employees e
+ON m.Emp_ID = e.Manager_ID
+GROUP BY m.Name;
+
+Q58. Find managers who manage more than 2 employees.
+SELECT
+    m.Name AS Manager,
+    COUNT(e.Emp_ID) AS Employee_Count
+FROM Employees m
+JOIN Employees e
+ON m.Emp_ID = e.Manager_ID
+GROUP BY m.Name
+HAVING COUNT(e.Emp_ID) > 2;
+
+Q59. Display every department and its projects.
+SELECT
+    d.Department_Name,
+    p.Project_Name
+FROM Departments d
+LEFT JOIN Projects p
+ON d.Dept_ID = p.Dept_ID;
+
+Q60. Find departments that don't have any project.
+SELECT
+    d.Department_Name
+FROM Departments d
+LEFT JOIN Projects p
+ON d.Dept_ID = p.Dept_ID
+WHERE p.Project_ID IS NULL;
+
+PART 24 — JOIN + DISTINCT
+Q61. Display unique cities where employees from Python department work.
+SELECT DISTINCT
+    e.City
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE d.Department_Name = 'Python';
+
+Q62. Display unique departments having employees in Pune.
+SELECT DISTINCT
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.City = 'Pune';
+
+This connects JOIN with the DISTINCT concept from your original sheet.
+
+PART 25 — JOIN + ORDER BY + LIMIT
+Q63. Find the highest-paid employee and their department.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+ORDER BY e.Salary DESC
+LIMIT 1;
+
+Q64. Find the top 3 highest-paid employees with departments.
+SELECT
+    e.Name,
+    e.Salary,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+ORDER BY e.Salary DESC
+LIMIT 3;
+
+PART 26 — JOIN + Date/Other Filters
+Q65. Display employees who joined after 2023 with their department.
+SELECT
+    e.Name,
+    e.Joining_Date,
+    d.Department_Name
+FROM Employees e
+JOIN Departments d
+ON e.Dept_ID = d.Dept_ID
+WHERE e.Joining_Date > '2023-01-01';
+
+PART 27 — JOIN Order of Execution
+SELECT
+    d.Department_Name,
+    COUNT(e.Emp_ID)
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+WHERE e.Salary > 50000
+GROUP BY d.Department_Name
+HAVING COUNT(e.Emp_ID) > 1
+ORDER BY COUNT(e.Emp_ID) DESC;
+
+Think conceptually:
+
+FROM
+ ↓
+JOIN
+ ↓
+ON
+ ↓
+WHERE
+ ↓
+GROUP BY
+ ↓
+HAVING
+ ↓
+SELECT
+ ↓
+ORDER BY
+ ↓
+LIMIT
+
+PART 28 — ON vs WHERE ⭐⭐⭐
+SELECT *
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+AND e.Salary > 50000;
+
+Here the salary condition is part of the JOIN condition.
+
+Compare:
+
+SELECT *
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+WHERE e.Salary > 50000;
+
+PART 29 — The Most Important JOIN Patterns
+Pattern 1 — Basic INNER JOIN
+SELECT ...
+FROM A
+JOIN B
+ON A.id = B.id;
+
+Pattern 2 — LEFT JOIN
+SELECT ...
+FROM A
+LEFT JOIN B
+ON A.id = B.id;
+
+Pattern 3 — Find unmatched records
+SELECT ...
+FROM A
+LEFT JOIN B
+ON A.id = B.id
+WHERE B.id IS NULL;
+
+⭐ Very important.
+
+Pattern 4 — Multiple JOIN
+SELECT ...
+FROM A
+JOIN B
+ON A.id = B.a_id
+JOIN C
+ON B.id = C.b_id;
+
+Pattern 5 — SELF JOIN
+SELECT
+    e.Name,
+    m.Name
+FROM Employees e
+JOIN Employees m
+ON e.Manager_ID = m.Emp_ID;
+
+Pattern 6 — JOIN + GROUP BY
+SELECT
+    B.name,
+    COUNT(A.id)
+FROM A
+JOIN B
+ON A.b_id = B.id
+GROUP BY B.name;
+
+Pattern 7 — JOIN + HAVING
+SELECT
+    B.name,
+    COUNT(A.id)
+FROM A
+JOIN B
+ON A.b_id = B.id
+GROUP BY B.name
+HAVING COUNT(A.id) > 2;
+
+Pattern 8 — JOIN + Aggregate
+SELECT
+    B.name,
+    AVG(A.salary),
+    MAX(A.salary),
+    MIN(A.salary),
+    SUM(A.salary)
+FROM A
+JOIN B
+ON A.b_id = B.id
+GROUP BY B.name;
+
+PART 30 — JOIN Interview Questions Without Solutions
+After studying the solved questions above, practice these yourself.
+
+Q66 Display all employee names with their department names.
+
+Q67 Display employee name and department location.
+
+Q68 Display employees working in Java.
+
+Q69 Display employees working in Testing.
+
+Q70 Display employees whose salary is greater than ₹70,000 along with their department.
+
+Q71 Display employees from Pune with department names.
+
+Q72 Display department name and employee count.
+
+Q73 Display department name and average salary.
+
+Q74 Display department name and highest salary.
+
+Q75 Display department name and total salary.
+
+Intermediate Practice
+Q76 Display all departments, including departments with no employees.
+
+Q77 Find departments having zero employees.
+
+Q78 Find employees having no project.
+
+Q79 Display all projects and their departments.
+
+Q80 Find projects having no employees.
+
+Q81 Display employees with their projects.
+
+Q82 Display employees with department and project.
+
+Q83 Count employees working on each project.
+
+Q84 Find projects having more than 2 employees.
+
+Q85 Find departments having more than 2 employees.
+
+Advanced Practice
+Q86 Display employee and manager names using SELF JOIN.
+
+Q87 Find employees earning more than their manager.
+
+Q88 Find managers managing more than 2 employees.
+
+Q89 Display employee, manager, department and project.
+
+Q90 Find the highest-paid employee in each department.
+
+Q91 Find employees earning more than their department average.
+
+Q92 Find departments whose total salary exceeds ₹1,00,000.
+
+Q93 Find departments whose average salary exceeds ₹60,000.
+
+Q94 Find departments without any project.
+
+Q95 Find projects without any employee.
+
+PART 31 — JOIN Interview Rapid-Fire
+Q96 What is a JOIN?
+
+Q97 Why do we use JOIN?
+
+Q98 What is INNER JOIN?
+
+Q99 What is LEFT JOIN?
+
+Q100 What is RIGHT JOIN?
+
+Q101 What is FULL OUTER JOIN?
+
+Q102 Does MySQL support FULL OUTER JOIN directly?
+
+Q103 What is CROSS JOIN?
+
+Q104 What is SELF JOIN?
+
+Q105 What is the difference between JOIN and INNER JOIN?
+
+Q106 What is the difference between LEFT JOIN and RIGHT JOIN?
+
+Q107 How do you find unmatched records?
+
+Q108 Why do we use IS NULL with LEFT JOIN?
+
+Q109 What is the difference between ON and WHERE?
+
+Q110 Can we join more than two tables?
+
+Q111 Can we use GROUP BY with JOIN?
+
+Q112 Can we use HAVING with JOIN?
+
+Q113 Can we use aggregate functions with JOIN?
+
+Q114 Can we JOIN a table with itself?
+
+Q115 What is a JOIN condition?
+
+Q116 What happens if the JOIN condition doesn't match?
+
+Q117 What happens when duplicate values exist in the JOIN column?
+
+Q118 What is a Cartesian product?
+
+Q119 Why can a JOIN produce duplicate rows?
+
+Q120 How can you remove duplicate results?
+
+SELECT DISTINCT ...
+PART 32 — One Golden Example to Understand JOIN Completely
+
+Employees
+Emp_ID | Name   | Dept_ID
+-------|--------|--------
+101    | Sudha  | 1
+102    | Ravi   | 2
+103    | Shankar| 3
+104    | Sachin | 1
+105    | Neha   | 4
+106    | Karan  | 1
+107    | Sneha  | 3
+108    | Arjun  | 2
+
+Departments
+Dept_ID | Department
+--------|----------
+1       | Python
+2       | Java
+3       | Testing
+4       | HR
+5       | DevOps
+
+INNER JOIN
+Employee + Matching Department
+
+DevOps disappears because:
+Dept_ID = 5
+
+doesn't exist in Employees.
+
+LEFT JOIN
+All Employees
++
+matching Departments
+All 8 employees remain.
+
+RIGHT JOIN
+All Departments
++
+matching Employees
+All 5 departments remain.
+DevOps has:
+Employee = NULL
+
+FULL OUTER JOIN
+Conceptually:
+All Employees
++
+All Departments
++
+Matches
+
+CROSS JOIN
+Every Employee
+×
+Every Department
+
+8 × 5:
+40 combinations
+
+SELF JOIN
+Employees
+    ↕
+Employees
+One copy represents:
+Employee
+The other copy represents:
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Employees
+Emp_ID	Name	Dept_ID	Manager_ID	Salary	City
+101	Sudha	1	201	50000	Pune
+102	Ravi	2	NULL	65000	Mumbai
+103	Shankar	3	202	45000	Pune
+104	Sachin	1	201	74000	Delhi
+105	Neha	4	NULL	40000	Mumbai
+106	Karan	1	201	80000	Pune
+107	Sneha	3	202	42000	Hyderabad
+108	Arjun	2	NULL	90000	Bangalore
+
+Departments
+Dept_ID	Department_Name	Location
+1	Python	Pune
+2	Java	Mumbai
+3	Testing	Hyderabad
+4	HR	Delhi
+5	DevOps	Bangalore
+
+Projects
+Project_ID	Project_Name	Dept_ID
+501	FastBox	1
+502	Banking App	2
+503	Testing Portal	3
+504	HR Management	4
+505	Cloud Migration	5
+
+Employee_Projects
+Emp_ID	Project_ID
+101	501
+102	502
+103	503
+104	501
+106	501
+107	503
+108	502
+
+PART A — INNER JOIN
+20 Questions
+Q1 Display employee name and department name using INNER JOIN.
+Q2 Display employee name, salary and department name.
+Q3 Display employee name and department location.
+Q4 Display all employees working in the Python department.
+Q5 Display all employees working in the Java department.
+Q6 Display employees whose salary is greater than ₹60,000 along with their department.
+Q7 Display employees from Pune along with their department name.
+Q8 Display employees from Mumbai along with their department location.
+Q9 Display employee name, city, department name and department location.
+Q10 Display Python employees whose salary is greater than ₹60,000.
+Q11 Display employees from Python or Java departments.
+Q12 Display employees whose salary is between ₹50,000 and ₹80,000 along with their department.
+Q13 Display employees whose department location is Pune.
+Q14 Display employee names and department names sorted by salary from highest to lowest.
+Q15 Display the highest-paid employee along with their department name.
+Q16 Display the top 3 highest-paid employees with their department names.
+Q17 Count the number of employees in each department.
+Q18 Find the average salary of each department.
+Q19 Find the highest salary in each department.
+Q20 Find the total salary of each department.
+
+PART B — LEFT JOIN
+20 Questions
+Q21 Display all employees with their department names.
+Q22 Display all employees with their department location.
+Q23 Display all employees and their project names.
+Q24 Display all employees including employees who are not assigned to any project.
+Q25 Find employees who are not assigned to any project.
+Q26 Display all departments and their employees.
+Q27 Display all departments including departments having no employees.
+Q28 Find departments that have no employees.
+Q29 Display all projects and employees assigned to each project.
+Q30 Display all projects including projects having no employees.
+Q31 Find projects that have no employees.
+Q32 Display every department and employee count.
+Q33 Display every department and average employee salary.
+Q34 Display every department and total employee salary.
+Q35 Display every department and highest employee salary.
+Q36 Display every department and lowest employee salary.
+Q37 Display all employees and show their project names, including employees without projects.
+Q38 Display all departments having more than 1 employee.
+Q39 Display all departments having no employee whose salary is greater than ₹50,000.
+Q40 Display all departments and the number of employees earning more than ₹60,000.
+
+PART C — RIGHT JOIN
+10 Questions
+Q41 Display all departments and their matching employees using RIGHT JOIN.
+Q42 Display all departments with employee names and salaries.
+Q43 Display all departments including departments with no employees.
+Q44 Find departments without employees using RIGHT JOIN.
+Q45 Display all departments and employee count using RIGHT JOIN.
+Q46 Display all departments and their employee cities.
+Q47 Display all departments and their highest employee salary.
+Q48 Display all departments and their total employee salary.
+Q49 Display all departments whose employee count is greater than 1.
+Q50 Display all departments with employee names, sorted by department name.
+
+PART D — FULL OUTER JOIN
+5 Questions
+Q51 Display all employees and all departments, including unmatched records.
+Q52 Display all employees and departments using a MySQL-compatible approach for FULL OUTER JOIN.
+Q53 Find departments that don't have employees while also keeping employees that don't have matching departments.
+Q54 Display employee name, department name and department location while keeping unmatched records from both tables.
+Q55 Find the total number of matched and unmatched records between Employees and Departments.
+
+PART E — CROSS JOIN
+5 Questions
+Q56 Display every possible employee-department combination.
+Q57 Display every employee with every project.
+Q58 Find the total number of combinations between Employees and Departments.
+Q59 Generate every possible combination of Departments and Projects.
+Q60 Generate every possible combination of employee names and department names and sort by employee name.
+
+PART F — SELF JOIN
+Q61 Display employee name and manager name using SELF JOIN.
+Q62 Display all employees who have a manager.
+Q63 Display employees who do not have a manager.
+Q64 Display employee name, employee salary, manager name and manager salary.
+Q65 Find employees whose salary is greater than their manager's salary.
+Q66 Find employees whose salary is less than their manager's salary.
+Q67 Count how many employees each manager manages.
+Q68 Find managers who manage more than 2 employees.
+Q69 Display employee name, manager name and employee city.
+Q70 Display employee name, manager name and department name.
+
+PART G — MULTIPLE JOIN
+Q71 Display employee name, department name and project name.
+Q72 Display employee name, department location and project name.
+Q73 Display all employees with their department and project, including employees without projects.
+Q74 Display project name, department name and department location.
+Q75 Find all Python employees working on the FastBox project.
+Q76 Find all employees working on the Testing Portal project.
+Q77 Count employees working on each project.
+Q78 Find projects having more than 2 employees.
+Q79 Find the department with the highest number of project employees.
+Q80 Display employee, manager, department and project information together.
+
+PART H — JOIN + GROUP BY
+Q81 Count employees department-wise using JOIN.
+Q82 Find average salary department-wise using JOIN.
+Q83 Find maximum salary department-wise using JOIN.
+Q84 Find minimum salary department-wise using JOIN.
+Q85 Find total salary department-wise using JOIN.
+
+PART I — JOIN + HAVING
+Q86 Find departments having more than 2 employees.
+Q87 Find departments having average salary greater than ₹50,000.
+Q88 Find departments having total salary greater than ₹1,00,000.
+Q89 Find departments having maximum salary greater than ₹70,000.
+Q90 Find departments having at least 2 employees and average salary greater than ₹50,000.
+
+PART J — ADVANCED JOIN
+Q91 Find employees earning more than their department's average salary.
+Q92 Find the highest-paid employee in each department.
+Q93 Find the lowest-paid employee in each department.
+Q94 Find employees who earn more than every employee in the Testing department.
+Q95 Find departments whose average salary is greater than the company's overall average salary.
+Q96 Find the department having the highest total salary.
+Q97 Find the department having the highest average salary.
+Q98 Find the employee who works in the department with the highest average salary.
+Q99 Find managers whose employees have an average salary greater than ₹50,000.
+Q100 Display department name, employee count, total salary, average salary, highest salary and lowest salary, and display only departments having at least 2 employees.
+
+Q101 What is the difference between INNER JOIN and LEFT JOIN? Demonstrate it using the given tables.
+Q102 Write a query to find records present in Departments but not in Employees.
+Q103 Write a query to find records present in Employees but not in Departments.
+Q104 Write a query to find employees who don't have a matching project.
+Q105 Write a query to find projects that don't have any employee.
+Q106 Write a query to display each employee and their manager using SELF JOIN.
+Q107 Write a query to find employees earning more than their managers.
+Q108 Write a query using three JOINs to display employee, department and project.
+Q109 Write a query using JOIN + GROUP BY + HAVING to find departments having more than 2 employees.
+Q110 Write a query using JOIN + aggregate functions to display department-wise employee count, average salary and total salary.
+Q111 Write a query to find the department whose average salary is highest.
+Q112 Write a query to find the second-highest salary employee along with their department.
+Q113 Write a query to find the highest-paid employee in every department.
+Q114 Write a query to find employees who earn more than their department's average salary.
+Q115 Write a query to display every department even if it has zero employees, and show employee count as 0.
+Q116 Write a query to display every employee even if they don't have a project.
+Q117 Write a query to display every project even if no employee is assigned to it.
+Q118 Write a query to display employee, manager, department and project details in one result.
+Q119 Write a query to identify departments that have employees but no projects.
+Q120 Write a query to identify projects whose department has no employees.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 1. What is primary key ?
