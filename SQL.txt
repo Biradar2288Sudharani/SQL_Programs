@@ -584,18 +584,8 @@ If the tables are large, the result can contain millions of rows, so it should o
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                                           NOW IT'S TIME TO LEARNING JOIN
-
-
 Table 1 — Employees
-CREATE TABLE Employees (
-    Emp_ID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    Dept_ID INT,
-    Manager_ID INT,
-    Salary INT,
-    City VARCHAR(50)
-);
-Data
+
 Emp_ID	Name	Dept_ID	Manager_ID	Salary	City
 101	Sudha	1	201	50000	Pune
 102	Ravi	2	NULL	65000	Mumbai
@@ -607,11 +597,7 @@ Emp_ID	Name	Dept_ID	Manager_ID	Salary	City
 108	Arjun	2	NULL	90000	Bangalore
 
 Table 2 — Departments
-CREATE TABLE Departments (
-    Dept_ID INT PRIMARY KEY,
-    Department_Name VARCHAR(50),
-    Location VARCHAR(50)
-);
+
 Dept_ID	Department_Name	Location
 1	Python	Pune
 2	Java	Mumbai
@@ -620,11 +606,7 @@ Dept_ID	Department_Name	Location
 5	DevOps	Bangalore
 
 Table 3 — Projects
-CREATE TABLE Projects (
-    Project_ID INT PRIMARY KEY,
-    Project_Name VARCHAR(100),
-    Dept_ID INT
-);
+
 Project_ID	Project_Name	Dept_ID
 501	FastBox	1
 502	Banking App	2
@@ -633,10 +615,7 @@ Project_ID	Project_Name	Dept_ID
 505	Cloud Migration	5
 
 Table 4 — Employee_Projects
-CREATE TABLE Employee_Projects (
-    Emp_ID INT,
-    Project_ID INT
-);
+
 Emp_ID	Project_ID
 101	501
 102	502
