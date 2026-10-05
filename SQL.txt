@@ -584,47 +584,6 @@ If the tables are large, the result can contain millions of rows, so it should o
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                                           NOW IT'S TIME TO LEARNING JOIN
-Table 1 — Employees
-
-Emp_ID	Name	Dept_ID	Manager_ID	Salary	City
-101	Sudha	1	201	50000	Pune
-102	Ravi	2	NULL	65000	Mumbai
-103	Shankar	3	202	45000	Pune
-104	Sachin	1	201	74000	Delhi
-105	Neha	4	NULL	40000	Mumbai
-106	Karan	1	201	80000	Pune
-107	Sneha	3	202	42000	Hyderabad
-108	Arjun	2	NULL	90000	Bangalore
-
-Table 2 — Departments
-
-Dept_ID	Department_Name	Location
-1	Python	Pune
-2	Java	Mumbai
-3	Testing	Hyderabad
-4	HR	Delhi
-5	DevOps	Bangalore
-
-Table 3 — Projects
-
-Project_ID	Project_Name	Dept_ID
-501	FastBox	1
-502	Banking App	2
-503	Testing Portal	3
-504	HR Management	4
-505	Cloud Migration	5
-
-Table 4 — Employee_Projects
-
-Emp_ID	Project_ID
-101	501
-102	502
-103	503
-104	501
-106	501
-107	503
-108	502
-
 Syntax
 SELECT columns
 FROM table1
