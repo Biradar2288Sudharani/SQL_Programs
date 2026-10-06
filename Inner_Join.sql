@@ -93,6 +93,29 @@ INNER JOIN Departments1 AS d
 ON e.Dept_ID = d.Dept_ID
 WHERE d.Department_Name = 'Python' AND e.Salary > 70000; 
 
+-- Q8. Count employees department-wise.
+SELECT d.Department_Name, COUNT(e.Emp_ID) AS Employee_Count
+FROM Employees1 AS e
+INNER JOIN Departments1 AS d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name; 
+
+-- Q9. Find average salary department-wise.
+SELECT d.Department_Name, AVG(e.Salary) AS Average_Salary
+FROM Employees1 AS e
+INNER JOIN Departments1 AS d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name; 
+
+-- Q10. Find highest salary in each department.
+SELECT d.Department_Name, MAX(e.Salary) AS Highest_Salary
+FROM Employees1 AS e
+INNER JOIN Departments1 AS d
+ON e.Dept_ID = d.Dept_ID
+GROUP BY d.Department_Name; 
+
+--  
+
 
 
 
