@@ -114,7 +114,21 @@ INNER JOIN Departments1 AS d
 ON e.Dept_ID = d.Dept_ID
 GROUP BY d.Department_Name; 
 
---  
+-- INNER JOIN: Multiple Tables
+-- Q11. Display employee name and project name. 
+SELECT e.Name, p.Project_Name
+FROM Employees1 e
+INNER JOIN Projects1 p
+ON e.Dept_ID = p.Dept_ID;
+ -- OR
+SELECT
+    e.Name,
+    p.Project_Name
+FROM Employees1 e
+INNER JOIN Employee_Projects1 ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects1 p
+ON ep.Project_ID = p.Project_ID;
 
 
 

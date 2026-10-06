@@ -584,52 +584,42 @@ If the tables are large, the result can contain millions of rows, so it should o
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                                           NOW IT'S TIME TO LEARNING JOIN
-Q8. Count employees department-wise.
-SELECT
-    d.Department_Name,
-    COUNT(e.Emp_ID) AS Employee_Count
-FROM Employees e
-INNER JOIN Departments d
-ON e.Dept_ID = d.Dept_ID
-GROUP BY d.Department_Name;
+************* Employees1 Table Data
+Emp_ID  Name   Dept_ID Manager_ID Salary City
+101	Sudha	1	201	50000	Pune
+102	Sagar	2		65000	Mumbai
+103	Shankar	3	202	45000	Pune
+104	Sachin	1	201	74000	Delhi
+105	Neha	4		40000	Mumbai
+106	Karan	1	201	80000	Pune
+107	Sneha	3	202	42000	Hyderabad
+108	Arjun	2		90000	Bengalore
+					
+************* Departments1 Table Data
+Dept_ID   Department_Name Location
+1	  Python	  Pune
+2	  Java	          Mumbai
+3	  Testing	  Hyderabad
+4	  HR	          Delhi
+5	  DevOps	  Bengalore
 
-Q9. Find average salary department-wise.
-SELECT
-    d.Department_Name,
-    AVG(e.Salary) AS Average_Salary
-FROM Employees e
-INNER JOIN Departments d
-ON e.Dept_ID = d.Dept_ID
-GROUP BY d.Department_Name;
+************* Projects1 Table Data
+Project_ID Project_Name       Dept_ID
+501	   FastBox	        1
+502	   Banking App	        2
+503	   Testing Portal	3
+504	   HR Management	4
+505	   Cloud Migration	5
 
-Q10. Find highest salary in each department.
-SELECT
-    d.Department_Name,
-    MAX(e.Salary) AS Highest_Salary
-FROM Employees e
-INNER JOIN Departments d
-ON e.Dept_ID = d.Dept_ID
-GROUP BY d.Department_Name;
-
-PART 5 — INNER JOIN: Multiple Tables
-Now we go one level deeper.
-Q11. Display employee name and project name.
-SELECT
-    e.Name,
-    p.Project_Name
-FROM Employees e
-INNER JOIN Employee_Projects ep
-ON e.Emp_ID = ep.Emp_ID
-INNER JOIN Projects p
-ON ep.Project_ID = p.Project_ID;
-Flow
-Employees
-    ↓
-Employee_Projects
-    ↓
-Projects
-
-This is called a multiple JOIN.
+************* Employee_Projects1 Table Data
+Emp_ID  Project_ID
+101	501
+102	502
+103	503
+104	501
+106	501
+107	503
+108	502
 
 Q12. Display employee, department and project.
 SELECT
