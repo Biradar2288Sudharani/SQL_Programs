@@ -621,52 +621,6 @@ Emp_ID  Project_ID
 107	503
 108	502
 
-Q12. Display employee, department and project.
-SELECT
-    e.Name,
-    d.Department_Name,
-    p.Project_Name
-FROM Employees e
-INNER JOIN Departments d
-ON e.Dept_ID = d.Dept_ID
-INNER JOIN Employee_Projects ep
-ON e.Emp_ID = ep.Emp_ID
-INNER JOIN Projects p
-ON ep.Project_ID = p.Project_ID;
-
-Q13. Display Python employees and their projects.
-SELECT
-    e.Name,
-    d.Department_Name,
-    p.Project_Name
-FROM Employees e
-INNER JOIN Departments d
-ON e.Dept_ID = d.Dept_ID
-INNER JOIN Employee_Projects ep
-ON e.Emp_ID = ep.Emp_ID
-INNER JOIN Projects p
-ON ep.Project_ID = p.Project_ID
-WHERE d.Department_Name = 'Python';
-
-Q14. Count employees working on each project.
-SELECT
-    p.Project_Name,
-    COUNT(ep.Emp_ID) AS Employee_Count
-FROM Projects p
-INNER JOIN Employee_Projects ep
-ON p.Project_ID = ep.Project_ID
-GROUP BY p.Project_Name;
-
-Q15. Find projects having more than 2 employees.
-SELECT
-    p.Project_Name,
-    COUNT(ep.Emp_ID) AS Employee_Count
-FROM Projects p
-INNER JOIN Employee_Projects ep
-ON p.Project_ID = ep.Project_ID
-GROUP BY p.Project_Name
-HAVING COUNT(ep.Emp_ID) > 2;
-
 PART 6 — LEFT JOIN
 What is LEFT JOIN?
 

@@ -121,14 +121,62 @@ FROM Employees1 e
 INNER JOIN Projects1 p
 ON e.Dept_ID = p.Dept_ID;
  -- OR
-SELECT
-    e.Name,
-    p.Project_Name
+SELECT e.Name, p.Project_Name
+FROM Employees1 e
+INNER JOIN Employee_Projects1 ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN  Projects1 p
+ON ep.Project_ID = p.Project_ID;
+
+-- Q12. Display employee, department and project.
+SELECT e.Emp_ID, e.Name, d.Department_Name, p.Project_Name
+FROM Employees1 e
+INNER JOIN Departments1 d
+ON e.Dept_ID = d.Dept_ID
+INNER JOIN Employee_Projects1 ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects1 p
+ON p.Project_ID = ep.Project_ID; 
+
+-- Q13. Display Python employees and their projects.
+SELECT e.Name, d.Department_Name, p.Project_Name
+FROM Employees1 e
+INNER JOIN Departments1 d
+ON e.Dept_ID = d.Dept_ID
+INNER JOIN Employee_Projects1 ep
+ON e.Emp_ID = ep.Emp_ID
+INNER JOIN Projects1 p
+ON ep.Project_ID = p.Project_ID
+WHERE d.Department_Name = 'Python';
+
+-- Q14. Count employees working on each project.
+SELECT p.Project_Name, COUNT(e.Emp_ID) AS Employee_Count
 FROM Employees1 e
 INNER JOIN Employee_Projects1 ep
 ON e.Emp_ID = ep.Emp_ID
 INNER JOIN Projects1 p
-ON ep.Project_ID = p.Project_ID;
+ON ep.Project_ID = p.Project_ID
+GROUP BY p.Project_Name ;
+-- OR
+SELECT
+p.Project_Name, COUNT(ep.Emp_ID) AS Employee_Count
+FROM Projects1 p
+INNER JOIN Employee_Projects1 ep
+ON p.Project_ID = ep.Project_ID
+GROUP BY p.Project_Name;
+
+-- Q15. Find projects having more than 2 employees.
+SELECT
+p.Project_Name, COUNT(ep.Emp_ID) AS Employee_Count
+FROM Projects1 p
+INNER JOIN Employee_Projects1 ep
+ON p.Project_ID = ep.Project_ID
+GROUP BY p.Project_Name
+HAVING COUNT(ep.Emp_ID) > 2;
+
+
+
+
 
 
 
