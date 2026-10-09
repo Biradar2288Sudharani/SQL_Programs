@@ -415,3 +415,24 @@ WHERE e.Salary > 50000
 GROUP BY d.Department_Name
 HAVING COUNT(e.Emp_ID) > 1
 ORDER BY COUNT(e.Emp_ID) DESC;
+
+-- PART 28 — ON vs WHERE ⭐⭐⭐
+SELECT *
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+AND e.Salary > 50000;
+
+SELECT *
+FROM Departments d
+LEFT JOIN Employees e
+ON d.Dept_ID = e.Dept_ID
+WHERE e.Salary > 50000;
+
+
+
+
+
+
+
+
