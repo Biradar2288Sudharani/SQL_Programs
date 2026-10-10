@@ -64,3 +64,5 @@ FROM A
 JOIN B
 ON A.b_id = B.id
 GROUP BY B.name;
+
+SELECT * FROM Employees;

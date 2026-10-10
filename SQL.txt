@@ -621,93 +621,6 @@ Emp_ID  Project_ID
 107	503
 108	502
 
-
-PART 28 — ON vs WHERE ⭐⭐⭐
-SELECT *
-FROM Departments d
-LEFT JOIN Employees e
-ON d.Dept_ID = e.Dept_ID
-AND e.Salary > 50000;
-
-Here the salary condition is part of the JOIN condition.
-
-Compare:
-
-SELECT *
-FROM Departments d
-LEFT JOIN Employees e
-ON d.Dept_ID = e.Dept_ID
-WHERE e.Salary > 50000;
-
-PART 29 — The Most Important JOIN Patterns
-Pattern 1 — Basic INNER JOIN
-SELECT ...
-FROM A
-JOIN B
-ON A.id = B.id;
-
-Pattern 2 — LEFT JOIN
-SELECT ...
-FROM A
-LEFT JOIN B
-ON A.id = B.id;
-
-Pattern 3 — Find unmatched records
-SELECT ...
-FROM A
-LEFT JOIN B
-ON A.id = B.id
-WHERE B.id IS NULL;
-
-⭐ Very important.
-
-Pattern 4 — Multiple JOIN
-SELECT ...
-FROM A
-JOIN B
-ON A.id = B.a_id
-JOIN C
-ON B.id = C.b_id;
-
-Pattern 5 — SELF JOIN
-SELECT
-    e.Name,
-    m.Name
-FROM Employees e
-JOIN Employees m
-ON e.Manager_ID = m.Emp_ID;
-
-Pattern 6 — JOIN + GROUP BY
-SELECT
-    B.name,
-    COUNT(A.id)
-FROM A
-JOIN B
-ON A.b_id = B.id
-GROUP BY B.name;
-
-Pattern 7 — JOIN + HAVING
-SELECT
-    B.name,
-    COUNT(A.id)
-FROM A
-JOIN B
-ON A.b_id = B.id
-GROUP BY B.name
-HAVING COUNT(A.id) > 2;
-
-Pattern 8 — JOIN + Aggregate
-SELECT
-    B.name,
-    AVG(A.salary),
-    MAX(A.salary),
-    MIN(A.salary),
-    SUM(A.salary)
-FROM A
-JOIN B
-ON A.b_id = B.id
-GROUP BY B.name;
-
 PART 30 — JOIN Interview Questions Without Solutions
 After studying the solved questions above, practice these yourself.
 
@@ -1286,5 +1199,3 @@ Q120 Write a query to identify projects whose department has no employees.
 196.
 197.
 198.
-199.
-200.
