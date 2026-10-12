@@ -65,4 +65,20 @@ JOIN B
 ON A.b_id = B.id
 GROUP BY B.name;
 
-SELECT * FROM Employees;
+USE sql_practice;
+
+SELECT * FROM Departments1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
