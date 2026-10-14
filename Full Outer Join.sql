@@ -24,3 +24,7 @@ FROM Employees e
 RIGHT JOIN Departments d
 ON e.Dept_ID = d.Dept_ID;
 
+
+
+SELECT * FROM Employee;
+
