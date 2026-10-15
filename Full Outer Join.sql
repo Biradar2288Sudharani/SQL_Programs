@@ -9,7 +9,7 @@ Syntax - SELECT *
 */
 
 SELECT *
-FROM Employees e
+FROM Employees e,
 FULL OUTER JOIN Departments d
 ON e.Dept_ID = d.Dept_ID;
 
