@@ -64,3 +64,15 @@ FROM A
 JOIN B
 ON A.b_id = B.id
 GROUP BY B.name;
+
+-- Task 1 formula
+SELECT
+    B.name,
+    AVG(A.salary),
+    MAX(A.salary),
+    MIN(A.salary),
+    SUM(A.salary)
+FROM A
+JOIN B
+ON A.b_id = B.id
+GROUP BY B.name;
